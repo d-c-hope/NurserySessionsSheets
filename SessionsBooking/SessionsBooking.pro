@@ -20,7 +20,9 @@ SOURCES += main.cpp\
     tablemodel.cpp \
     pagenavigator.cpp \
     newchildform.cpp \
-    stackWidget.cpp
+    stackWidget.cpp \
+    timeutils.cpp \
+    editchildform.cpp
 
 HEADERS  += mainwindow.h \
     childlistform.h \
@@ -29,11 +31,14 @@ HEADERS  += mainwindow.h \
     tablemodel.h \
     pagenavigator.h \
     newchildform.h \
-    stackWidget.h
+    stackWidget.h \
+    timeutils.h \
+    editchildform.h
 
 FORMS    += mainwindow.ui \
     childlistform.ui \
-    newchildform.ui
+    newchildform.ui \
+    editchildform.ui
 
 INCLUDEPATH += /Users/david_hope2/Desktop/boost_1_58_0
 

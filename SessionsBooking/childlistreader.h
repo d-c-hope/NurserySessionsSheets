@@ -13,6 +13,7 @@ class ChildListReader
 public:
     ChildListReader();
     std::vector<Child> readList(std::string filename);
+    void writeList(std::vector<Child>, std::string filename);
 };
 
 #endif // CHILDLISTREADER_H

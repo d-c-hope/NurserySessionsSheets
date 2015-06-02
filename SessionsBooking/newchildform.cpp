@@ -10,14 +10,14 @@
 #include <boost/range/algorithm_ext/push_back.hpp>
 
 NewChildForm::NewChildForm(QWidget *parent, PageNavigator* _nav) :
-    QWidget(parent),
+    StackWidget(parent),
     ui(new Ui::NewChildForm)
 {
+    name = "new_child";
     ui->setupUi(this);
     navigator = _nav;
     std::vector<int> daysI;
     std::vector<int> monthsI;
-//    std::vector<int> yearsI;
 
     boost::push_back(daysI, boost::irange(1, 32));
     std::vector<std::string> days(daysI.size());
@@ -25,23 +25,11 @@ NewChildForm::NewChildForm(QWidget *parent, PageNavigator* _nav) :
         return std::to_string(i);
     });
 
-//    boost::push_back(monthsI, boost::irange(1, 13));
-//    std::vector<std::string> months(monthsI.size());
-//    std::transform (monthsI.begin(), monthsI.end(), months.begin(), [](int i) {
-//        return std::to_string(i);
-//    });
     std::vector<std::string> v = { "xyzzy", "plugh", "abracadabra" };
     std::vector<std::string> months = {"January", "February", "March", "April", "May", "June", "July","August","September","October","November","December"};
 
-    // get the year now/*
-//    auto timeNow = std::chrono::system_clock::now();
-//    time_t tt = std::chrono::system_clock::to_time_t(timeNow);
-//    tm utc_tm = *gmtime(&tt);
-//    int yearNow = utc_tm.tm_year + 1900;
-
     std::vector<int> yearsI = getYears();
 
-//    boost::push_back(yearsI, boost::irange(yearNow-6, yearNow+1));
     std::vector<std::string> years(yearsI.size());
     std::transform (yearsI.begin(), yearsI.end(), years.begin(), [](int i) {
         return std::to_string(i);
@@ -65,14 +53,7 @@ NewChildForm::NewChildForm(QWidget *parent, PageNavigator* _nav) :
 }
 
 
-void NewChildForm::createChild() {
-//    lass Child
-//    {
-//    public:
-//        std::string firstName;
-//        std::string lastName;
-//        std::chrono::system_clock::time_point dob;
-//        Child(std::string firstName, std::string lastName, std::chrono::system_clock::time_point dob);
+Child NewChildForm::getChild() {
 
     std::string firstName = ui->firstNameEdit->text().toStdString();
     std::string lastName = ui->lastNameEdit->text().toStdString();
@@ -90,11 +71,8 @@ void NewChildForm::createChild() {
     auto ageTp = std::chrono::system_clock::from_time_t(std::mktime(&tm));
 
     Child c(firstName, lastName, ageTp);
-//    std::time_t t = std::chrono::system_clock::to_time_t(tp);
-//    std::cout << std::put_time(std::localtime(&t), "%d/%m/%Y") << '\n';
-//    std::chrono::system_clock::time_point age = tp;
 
-
+    return c;
 
 }
 
@@ -108,10 +86,7 @@ std::vector<int> NewChildForm::getYears() {
     int yearNow = utc_tm.tm_year + 1900;
 
     boost::push_back(yearsI, boost::irange(yearNow-6, yearNow+1));
-//    std::vector<std::string> years(yearsI.size());
-//    std::transform (yearsI.begin(), yearsI.end(), years.begin(), [](int i) {
-//        return std::to_string(i);
-//    });
+
     return yearsI;
 }
 

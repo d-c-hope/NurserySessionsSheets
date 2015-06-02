@@ -26,6 +26,7 @@ ChildListForm::ChildListForm(QWidget *parent, PageNavigator* _navigator) :
 
 }
 
+
 ChildListForm::~ChildListForm()
 {
     delete ui;
@@ -36,7 +37,7 @@ void ChildListForm::onRowDoubleClick(const QModelIndex& index) {
     auto listOfChildren = model->getListOfChildren();
     Child child = listOfChildren[index.row()];
     std::cout << "On double click on " << child.firstName << child.lastName  << std::endl;
-    navigator->goToPage("new_child");
+    navigator->goToPage("edit_child");
 }
 
 
@@ -48,21 +49,26 @@ void ChildListForm::onNewChildClick() {
 }
 
 
-
-TableModel::TableModel(QObject *parent)
-    : QAbstractTableModel(parent)
-{
+void ChildListForm::addChild(Child child) {
+    model->addItem(child);
+    ChildListReader clReader;
+    clReader.writeList(model->getListOfChildren(), "");
 }
 
 
-TableModel::TableModel(std::vector<Child> _listOfChildren, QObject *parent)
-    : QAbstractTableModel(parent)
-{
-    std::vector<Child> listofChildren2 = _listOfChildren;
-    std::cout << _listOfChildren[0].firstName;
-    listOfChildren = _listOfChildren;
-    //std::cout << "raaa";
-}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

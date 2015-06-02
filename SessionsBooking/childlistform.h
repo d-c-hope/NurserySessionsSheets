@@ -25,6 +25,7 @@ public:
     QTableView* tView;
     explicit ChildListForm(QWidget *parent = 0, PageNavigator* _navigator = nullptr);
     ~ChildListForm();
+    void addChild(Child child);
 
 private:
     Ui::ChildListForm *ui;

@@ -4,6 +4,23 @@
 #include <iomanip>
 
 
+
+TableModel::TableModel(QObject *parent)
+    : QAbstractTableModel(parent)
+{
+}
+
+
+TableModel::TableModel(std::vector<Child> _listOfChildren, QObject *parent)
+    : QAbstractTableModel(parent)
+{
+    std::vector<Child> listofChildren2 = _listOfChildren;
+    std::cout << _listOfChildren[0].firstName;
+    listOfChildren = _listOfChildren;
+    //std::cout << "raaa";
+}
+
+
 int TableModel::rowCount(const QModelIndex &parent) const
 {
     Q_UNUSED(parent);
@@ -76,7 +93,13 @@ std::vector<Child> TableModel::getListOfChildren() {
 }
 
 
-
+void TableModel::addItem(Child c) {
+    QModelIndex mi;
+    beginInsertRows(mi, listOfChildren.size(), listOfChildren.size());
+    listOfChildren.push_back(c);
+    endInsertRows();
+//    emit editCompleted( true );
+}
 
 
 

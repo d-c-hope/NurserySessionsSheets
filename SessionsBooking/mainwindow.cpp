@@ -2,6 +2,7 @@
 #include "ui_mainwindow.h"
 #include "childlistform.h"
 #include "newchildform.h"
+#include "editchildform.h"
 #include <iostream>
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -46,17 +47,36 @@ void MainWindow::goToPage(std::string name) {
 //        int i = windows.size();
 //        int g = 8;
     }
+    if (name == "edit_child") {
+        QWidget* ecForm = new EditChildForm(this, this);
+        stackedWidget->addWidget(ecForm);
+        stackedWidget->setCurrentIndex(stackedWidget->count()-1);
+    }
 }
 
 
 void MainWindow::goBack() {
     int i = windows.size();
     if (stackedWidget->count() > 1) {
+        StackWidget * prev = dynamic_cast<StackWidget*>(stackedWidget->widget(stackedWidget->count()-2));
+        StackWidget * current = dynamic_cast<StackWidget*>(stackedWidget->currentWidget());
+        if (current->name == "new_child"){
+            NewChildForm* currentNCF = dynamic_cast<NewChildForm*>(current);
+            Child c = currentNCF->getChild();
+            std::cout << "was new child page "<< c.firstName;
+            ChildListForm* prevConcrete = dynamic_cast<ChildListForm*>(prev);
+            prevConcrete->addChild(c);
+        }
+
         stackedWidget->removeWidget(stackedWidget->currentWidget());
 //        stackedWidget->setCurrentIndex(stackedWidget->count()-1);
 
-
-
+//        StackWidget * current = dynamic_cast<StackWidget*>(stackedWidget->currentWidget());
+//        if (current->name == "new_child"){
+//            NewChildForm* currentNCF = dynamic_cast<NewChildForm*>(current);
+//            Child c = currentNCF->getChild();
+//            std::cout << "was new child page "<< c.firstName;
+//        }
 //        auto lastWidget = windows.back();
 //        auto widget2 = windows.front();
 ////        auto lastWidget2 = windows.back()-1;

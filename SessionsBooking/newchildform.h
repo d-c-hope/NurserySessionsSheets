@@ -3,20 +3,23 @@
 
 #include <QWidget>
 #include <pagenavigator.h>
+#include <stackWidget.h>
+#include "child.h"
 
 namespace Ui {
 class NewChildForm;
 }
 
-class NewChildForm : public QWidget
+class NewChildForm : public StackWidget
 {
     Q_OBJECT
 
 public:
     explicit NewChildForm(QWidget *parent = 0, PageNavigator* _nav = nullptr);
     ~NewChildForm();
-    std::vector<int> getYears();
-    void createChild();
+
+    Child getChild();
+
 
 public slots:
     void onGoBackClicked();
@@ -24,6 +27,7 @@ public slots:
 private:
     Ui::NewChildForm *ui;
     PageNavigator* navigator;
+    std::vector<int> getYears();
 };
 
 #endif // NEWCHILDFORM_H

@@ -1,5 +1,8 @@
 #include "pagenavigator.h"
 
-PageNavigator::PageNavigator()
-{
-}
+//PageNavigator::PageNavigator()
+//{
+//}
+
+
+//PageNavigator::goToPage()

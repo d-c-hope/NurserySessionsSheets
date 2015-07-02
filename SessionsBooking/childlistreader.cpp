@@ -31,14 +31,16 @@ std::vector<Child> ChildListReader::readList(std::string filename)
       struct tm tm;
       memset(&tm, 0, sizeof(struct tm));
 
-      strptime(strs[4].c_str(), "%d\/%m\/%Y", &tm);
+      strptime(strs[6].c_str(), "%d\/%m\/%Y", &tm);
       auto tp = std::chrono::system_clock::from_time_t(std::mktime(&tm));
 
       std::time_t t = std::chrono::system_clock::to_time_t(tp);
       std::cout << std::put_time(std::localtime(&t), "%d/%m/%Y") << '\n';
       std::chrono::system_clock::time_point age = tp;
 
-      Child child(strs[0], strs[2], age);
+      int id = atoi(strs[0].c_str());
+
+      Child child(id, strs[2], strs[4], age);
       children.push_back(child);
     }
 
@@ -56,7 +58,7 @@ void ChildListReader::writeList(std::vector<Child> children, std::string filenam
     for (auto child: children) {
         std::string dob = TimeUtils::timePointDateToString(child.dob);
         // David, Hope, 20/03/2012
-        out << child.firstName << ", "  << child.lastName << ", " << dob << "\n";
+        out << child.id << ", " << child.firstName << ", "  << child.lastName << ", " << dob << "\n";
     }
 }
 

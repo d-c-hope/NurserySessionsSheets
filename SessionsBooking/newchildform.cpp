@@ -6,6 +6,8 @@
 #include <chrono>
 #include <ctime>
 #include "child.h"
+#include "childlistreader.h"
+#include "timeutils.h"
 #include <boost/range/irange.hpp>
 #include <boost/range/algorithm_ext/push_back.hpp>
 
@@ -25,10 +27,10 @@ NewChildForm::NewChildForm(QWidget *parent, PageNavigator* _nav) :
         return std::to_string(i);
     });
 
-    std::vector<std::string> v = { "xyzzy", "plugh", "abracadabra" };
+//    std::vector<std::string> v = { "xyzzy", "plugh", "abracadabra" };
     std::vector<std::string> months = {"January", "February", "March", "April", "May", "June", "July","August","September","October","November","December"};
 
-    std::vector<int> yearsI = getYears();
+    std::vector<int> yearsI = TimeUtils::getYears();
 
     std::vector<std::string> years(yearsI.size());
     std::transform (yearsI.begin(), yearsI.end(), years.begin(), [](int i) {
@@ -60,7 +62,7 @@ Child NewChildForm::getChild() {
     int day = ui->dayCombo->currentIndex();
     int month = ui->monthCombo->currentIndex();
     int yearIdx = ui->yearCombo->currentIndex();
-    std::vector<int> years = getYears();
+    std::vector<int> years = TimeUtils::getYears();
     int year = years[yearIdx];
 
     struct std::tm tm;
@@ -70,25 +72,23 @@ Child NewChildForm::getChild() {
     tm.tm_mday = day;
     auto ageTp = std::chrono::system_clock::from_time_t(std::mktime(&tm));
 
-    Child c(firstName, lastName, ageTp);
+    ChildListReader clReader;
+    std::vector<Child> children = clReader.readList("");
+    std::vector<int> childrenIds(children.size());
+    std::transform(children.begin(), children.end(), childrenIds.begin(),
+       [](Child child) -> double { return child.id; });
+    auto it = max_element(std::begin(childrenIds), std::end(childrenIds));
+    int max = *it;
+
+
+    Child c(max+1, firstName, lastName, ageTp);
 
     return c;
 
 }
 
 
-std::vector<int> NewChildForm::getYears() {
-    // get the year now
-    std::vector<int> yearsI;
-    auto timeNow = std::chrono::system_clock::now();
-    time_t tt = std::chrono::system_clock::to_time_t(timeNow);
-    tm utc_tm = *gmtime(&tt);
-    int yearNow = utc_tm.tm_year + 1900;
 
-    boost::push_back(yearsI, boost::irange(yearNow-6, yearNow+1));
-
-    return yearsI;
-}
 
 
 NewChildForm::~NewChildForm()

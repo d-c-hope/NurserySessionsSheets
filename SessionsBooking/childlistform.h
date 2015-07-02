@@ -26,16 +26,21 @@ public:
     explicit ChildListForm(QWidget *parent = 0, PageNavigator* _navigator = nullptr);
     ~ChildListForm();
     void addChild(Child child);
+    void updateChild(Child original, Child child);
+    Child selectedChild;
 
 private:
     Ui::ChildListForm *ui;
     TableModel* model;
     PageNavigator* navigator;
     QPushButton* newChildButton;
+    QPushButton* sessionsButton;
 
 public slots:
     void onRowDoubleClick(const QModelIndex&);
+    void onRowSingleClick(const QModelIndex&);
     void onNewChildClick();
+    void onSessionsClick();
 };
 
 

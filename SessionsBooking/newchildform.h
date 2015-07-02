@@ -27,7 +27,6 @@ public slots:
 private:
     Ui::NewChildForm *ui;
     PageNavigator* navigator;
-    std::vector<int> getYears();
 };
 
 #endif // NEWCHILDFORM_H

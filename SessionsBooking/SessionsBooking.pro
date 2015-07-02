@@ -22,7 +22,10 @@ SOURCES += main.cpp\
     newchildform.cpp \
     stackWidget.cpp \
     timeutils.cpp \
-    editchildform.cpp
+    editchildform.cpp \
+    sessionsform.cpp \
+    sessionsreader.cpp \
+    sessions.cpp
 
 HEADERS  += mainwindow.h \
     childlistform.h \
@@ -33,12 +36,16 @@ HEADERS  += mainwindow.h \
     newchildform.h \
     stackWidget.h \
     timeutils.h \
-    editchildform.h
+    editchildform.h \
+    sessionsform.h \
+    sessionsreader.h \
+    sessions.h
 
 FORMS    += mainwindow.ui \
     childlistform.ui \
     newchildform.ui \
-    editchildform.ui
+    editchildform.ui \
+    sessionsform.ui
 
 INCLUDEPATH += /Users/david_hope2/Desktop/boost_1_58_0
 

@@ -3,6 +3,7 @@
 #include "childlistform.h"
 #include "newchildform.h"
 #include "editchildform.h"
+#include "sessionsform.h"
 #include <iostream>
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -48,8 +49,17 @@ void MainWindow::goToPage(std::string name) {
 //        int g = 8;
     }
     if (name == "edit_child") {
-        QWidget* ecForm = new EditChildForm(this, this);
+        ChildListForm* current = dynamic_cast<ChildListForm*>(stackedWidget->currentWidget());
+        Child child = current->selectedChild;
+        QWidget* ecForm = new EditChildForm(child, this, this);
         stackedWidget->addWidget(ecForm);
+        stackedWidget->setCurrentIndex(stackedWidget->count()-1);
+    }
+    if (name == "sessions") {
+        ChildListForm* current = dynamic_cast<ChildListForm*>(stackedWidget->currentWidget());
+        Child child = current->selectedChild;
+        QWidget* sForm = new SessionsForm(child, this, this);
+        stackedWidget->addWidget(sForm);
         stackedWidget->setCurrentIndex(stackedWidget->count()-1);
     }
 }
@@ -66,6 +76,19 @@ void MainWindow::goBack() {
             std::cout << "was new child page "<< c.firstName;
             ChildListForm* prevConcrete = dynamic_cast<ChildListForm*>(prev);
             prevConcrete->addChild(c);
+        }
+        else if (current->name == "edit_child"){
+            EditChildForm* currentNCF = dynamic_cast<EditChildForm*>(current);
+            Child c = currentNCF->getChild();
+            Child original = currentNCF->getOriginal();
+            std::cout << "was edit child page "<< c.firstName;
+            ChildListForm* prevConcrete = dynamic_cast<ChildListForm*>(prev);
+            prevConcrete->updateChild(original, c);
+        }
+        else if (current->name == "sessions"){
+//            SessionsForm* currentSF = dynamic_cast<SessionsForm*>(current);
+//            ChildListForm* prevConcrete = dynamic_cast<ChildListForm*>(prev);
+
         }
 
         stackedWidget->removeWidget(stackedWidget->currentWidget());

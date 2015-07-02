@@ -102,6 +102,15 @@ void TableModel::addItem(Child c) {
 }
 
 
+void TableModel::updateItem(Child orig, Child updated) {
+    QModelIndex mi;
+    beginInsertRows(mi, listOfChildren.size(), listOfChildren.size());
+    auto it = find (listOfChildren.begin(), listOfChildren.end(), orig);
+    *it = updated;
+    endInsertRows();
+}
+
+
 
 
 

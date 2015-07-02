@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>SessionsForm</class>
+ <widget class="QWidget" name="SessionsForm">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>640</width>
+    <height>480</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <widget class="QWidget" name="gridLayoutWidget">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>10</y>
+     <width>601</width>
+     <height>451</height>
+    </rect>
+   </property>
+   <layout class="QGridLayout" name="gridLayout">
+    <item row="9" column="1">
+     <widget class="QComboBox" name="comboBox_9"/>
+    </item>
+    <item row="10" column="0">
+     <widget class="QCheckBox" name="fridayPMCheckBox">
+      <property name="text">
+       <string>Friday PM</string>
+      </property>
+     </widget>
+    </item>
+    <item row="8" column="1">
+     <widget class="QComboBox" name="comboBox_8"/>
+    </item>
+    <item row="3" column="1">
+     <widget class="QComboBox" name="comboBox_3"/>
+    </item>
+    <item row="0" column="0">
+     <widget class="QLabel" name="label">
+      <property name="text">
+       <string>Start Date</string>
+      </property>
+     </widget>
+    </item>
+    <item row="11" column="1">
+     <widget class="QPushButton" name="cancelButton">
+      <property name="maximumSize">
+       <size>
+        <width>100</width>
+        <height>16777215</height>
+       </size>
+      </property>
+      <property name="text">
+       <string>Cancel</string>
+      </property>
+     </widget>
+    </item>
+    <item row="10" column="1">
+     <widget class="QComboBox" name="comboBox_10"/>
+    </item>
+    <item row="2" column="1">
+     <widget class="QComboBox" name="comboBox_2"/>
+    </item>
+    <item row="1" column="1">
+     <widget class="QComboBox" name="comboBox"/>
+    </item>
+    <item row="6" column="1">
+     <widget class="QComboBox" name="comboBox_6"/>
+    </item>
+    <item row="8" column="0">
+     <widget class="QCheckBox" name="thursPMCheckBox">
+      <property name="text">
+       <string>Thursday PM</string>
+      </property>
+     </widget>
+    </item>
+    <item row="7" column="0">
+     <widget class="QCheckBox" name="thursAMCheckBox">
+      <property name="text">
+       <string>Thursday AM</string>
+      </property>
+     </widget>
+    </item>
+    <item row="9" column="0">
+     <widget class="QCheckBox" name="fridayAMCheckBox">
+      <property name="text">
+       <string>Friday AM</string>
+      </property>
+     </widget>
+    </item>
+    <item row="4" column="1">
+     <widget class="QComboBox" name="comboBox_4"/>
+    </item>
+    <item row="11" column="0">
+     <widget class="QPushButton" name="saveButton">
+      <property name="maximumSize">
+       <size>
+        <width>100</width>
+        <height>16777215</height>
+       </size>
+      </property>
+      <property name="text">
+       <string>Save</string>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="0">
+     <widget class="QCheckBox" name="monPMCheckBox">
+      <property name="text">
+       <string>Monday PM</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="0">
+     <widget class="QCheckBox" name="monAMCheckBox">
+      <property name="text">
+       <string>Monday AM</string>
+      </property>
+     </widget>
+    </item>
+    <item row="7" column="1">
+     <widget class="QComboBox" name="comboBox_7"/>
+    </item>
+    <item row="3" column="0">
+     <widget class="QCheckBox" name="tuesAMCheckBox">
+      <property name="text">
+       <string>Tuesday AM</string>
+      </property>
+     </widget>
+    </item>
+    <item row="5" column="0">
+     <widget class="QCheckBox" name="wedAMCheckBox">
+      <property name="text">
+       <string>Wednesday AM</string>
+      </property>
+     </widget>
+    </item>
+    <item row="5" column="1">
+     <widget class="QComboBox" name="comboBox_5"/>
+    </item>
+    <item row="6" column="0">
+     <widget class="QCheckBox" name="wedPMCheckBox">
+      <property name="text">
+       <string>Wednesday PM</string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="1">
+     <widget class="QDateEdit" name="dateEdit">
+      <property name="calendarPopup">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </item>
+    <item row="4" column="0">
+     <widget class="QCheckBox" name="tuesPMCheckBox">
+      <property name="text">
+       <string>Tuesday PM</string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="2">
+     <widget class="QPushButton" name="changeButton">
+      <property name="maximumSize">
+       <size>
+        <width>150</width>
+        <height>16777215</height>
+       </size>
+      </property>
+      <property name="text">
+       <string>Add Change</string>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

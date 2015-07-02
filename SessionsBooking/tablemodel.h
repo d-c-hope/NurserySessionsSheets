@@ -23,6 +23,8 @@ public:
     QVariant headerData(int section, Qt::Orientation orientation, int role) const;
     std::vector<Child> getListOfChildren();
     void addItem(Child c);
+    void updateItem(Child original, Child updated);
+
 
 private:
     std::vector<Child> listOfChildren;

@@ -25,7 +25,9 @@ SOURCES += main.cpp\
     editchildform.cpp \
     sessionsform.cpp \
     sessionsreader.cpp \
-    sessions.cpp
+    sessionshelpers.cpp \
+    attendancesheets.cpp \
+    childWeeklySessions.cpp
 
 HEADERS  += mainwindow.h \
     childlistform.h \
@@ -39,7 +41,9 @@ HEADERS  += mainwindow.h \
     editchildform.h \
     sessionsform.h \
     sessionsreader.h \
-    sessions.h
+    childWeeklySessions.h \
+    sessionshelpers.h \
+    attendancesheets.h
 
 FORMS    += mainwindow.ui \
     childlistform.ui \

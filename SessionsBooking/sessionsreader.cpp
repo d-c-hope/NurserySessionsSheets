@@ -59,7 +59,7 @@ sessionsMap SessionsReader::readSessions(std::string filename)
     }
 
     for (auto line: lines) {
-        Sessions childSessions;
+        ChildWeeklySessions childSessions;
 
         std::vector<std::string> strs;
 
@@ -78,8 +78,8 @@ sessionsMap SessionsReader::readSessions(std::string filename)
         if ( sessionsM.find(childId) != sessionsM.end() ) {
             sessionsM[childId].push_back(childSessions);
         } else {
-            std::vector<Sessions> cSessionsList{childSessions};
-            sessionsM[childId] = std::vector<Sessions>{childSessions};
+            std::vector<ChildWeeklySessions> cSessionsList{childSessions};
+            sessionsM[childId] = std::vector<ChildWeeklySessions>{childSessions};
         }
 
     }
@@ -87,6 +87,8 @@ sessionsMap SessionsReader::readSessions(std::string filename)
     return sessionsM;
 
 }
+
+
 
 
 sessionsMap SessionsReader::sessionsM;

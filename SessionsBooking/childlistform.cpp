@@ -3,6 +3,7 @@
 #include "childlistreader.h"
 #include "tablemodel.h"
 #include "child.h"
+#include "attendancesheets.h"
 
 
 ChildListForm::ChildListForm(QWidget *parent, PageNavigator* _navigator) :

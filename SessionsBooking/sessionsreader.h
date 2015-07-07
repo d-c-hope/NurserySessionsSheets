@@ -7,10 +7,10 @@
 #include <iostream>
 #include <vector>
 #include <map>
-#include "sessions.h"
+#include "childWeeklySessions.h"
 
 
-typedef std::map<int, std::vector<Sessions>> sessionsMap;
+typedef std::map<int, std::vector<ChildWeeklySessions>> sessionsMap;
 
 
 class SessionsReader

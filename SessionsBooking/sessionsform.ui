@@ -23,30 +23,14 @@
     </rect>
    </property>
    <layout class="QGridLayout" name="gridLayout">
-    <item row="9" column="1">
-     <widget class="QComboBox" name="comboBox_9"/>
-    </item>
-    <item row="10" column="0">
-     <widget class="QCheckBox" name="fridayPMCheckBox">
+    <item row="5" column="1">
+     <widget class="QCheckBox" name="tuesPMCheckBox">
       <property name="text">
-       <string>Friday PM</string>
+       <string>Tuesday PM</string>
       </property>
      </widget>
     </item>
-    <item row="8" column="1">
-     <widget class="QComboBox" name="comboBox_8"/>
-    </item>
-    <item row="3" column="1">
-     <widget class="QComboBox" name="comboBox_3"/>
-    </item>
-    <item row="0" column="0">
-     <widget class="QLabel" name="label">
-      <property name="text">
-       <string>Start Date</string>
-      </property>
-     </widget>
-    </item>
-    <item row="11" column="1">
+    <item row="14" column="1">
      <widget class="QPushButton" name="cancelButton">
       <property name="maximumSize">
        <size>
@@ -59,43 +43,82 @@
       </property>
      </widget>
     </item>
-    <item row="10" column="1">
-     <widget class="QComboBox" name="comboBox_10"/>
+    <item row="9" column="0">
+     <widget class="QCheckBox" name="thursAMCheckBox">
+      <property name="minimumSize">
+       <size>
+        <width>0</width>
+        <height>40</height>
+       </size>
+      </property>
+      <property name="text">
+       <string>Thursday AM</string>
+      </property>
+     </widget>
     </item>
-    <item row="2" column="1">
-     <widget class="QComboBox" name="comboBox_2"/>
-    </item>
-    <item row="1" column="1">
-     <widget class="QComboBox" name="comboBox"/>
-    </item>
-    <item row="6" column="1">
-     <widget class="QComboBox" name="comboBox_6"/>
-    </item>
-    <item row="8" column="0">
+    <item row="9" column="1">
      <widget class="QCheckBox" name="thursPMCheckBox">
       <property name="text">
        <string>Thursday PM</string>
       </property>
      </widget>
     </item>
-    <item row="7" column="0">
-     <widget class="QCheckBox" name="thursAMCheckBox">
+    <item row="1" column="0" colspan="3">
+     <widget class="QLabel" name="subTitleText">
       <property name="text">
-       <string>Thursday AM</string>
+       <string>These are the standard weekly sessions for a child. If there are changes for a single week you can add these in temp sessions and if the regulation sessions are due to change you can add these in new sessions</string>
+      </property>
+      <property name="wordWrap">
+       <bool>true</bool>
       </property>
      </widget>
     </item>
-    <item row="9" column="0">
+    <item row="5" column="2">
+     <widget class="QPushButton" name="prevSessionsButton">
+      <property name="text">
+       <string>Prev</string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="0" colspan="3">
+     <widget class="QLabel" name="titleText">
+      <property name="maximumSize">
+       <size>
+        <width>16777215</width>
+        <height>100</height>
+       </size>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>19</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>Weekly session for child</string>
+      </property>
+     </widget>
+    </item>
+    <item row="3" column="1">
+     <widget class="QCheckBox" name="monPMCheckBox">
+      <property name="text">
+       <string>Monday PM</string>
+      </property>
+     </widget>
+    </item>
+    <item row="11" column="0">
      <widget class="QCheckBox" name="fridayAMCheckBox">
+      <property name="minimumSize">
+       <size>
+        <width>0</width>
+        <height>40</height>
+       </size>
+      </property>
       <property name="text">
        <string>Friday AM</string>
       </property>
      </widget>
     </item>
-    <item row="4" column="1">
-     <widget class="QComboBox" name="comboBox_4"/>
-    </item>
-    <item row="11" column="0">
+    <item row="14" column="0">
      <widget class="QPushButton" name="saveButton">
       <property name="maximumSize">
        <size>
@@ -108,63 +131,75 @@
       </property>
      </widget>
     </item>
-    <item row="2" column="0">
-     <widget class="QCheckBox" name="monPMCheckBox">
+    <item row="12" column="0">
+     <widget class="QLabel" name="label">
       <property name="text">
-       <string>Monday PM</string>
+       <string>Week starting</string>
       </property>
      </widget>
     </item>
-    <item row="1" column="0">
+    <item row="3" column="0">
      <widget class="QCheckBox" name="monAMCheckBox">
+      <property name="minimumSize">
+       <size>
+        <width>0</width>
+        <height>40</height>
+       </size>
+      </property>
       <property name="text">
        <string>Monday AM</string>
       </property>
      </widget>
     </item>
-    <item row="7" column="1">
-     <widget class="QComboBox" name="comboBox_7"/>
-    </item>
-    <item row="3" column="0">
+    <item row="5" column="0">
      <widget class="QCheckBox" name="tuesAMCheckBox">
+      <property name="minimumSize">
+       <size>
+        <width>0</width>
+        <height>40</height>
+       </size>
+      </property>
       <property name="text">
        <string>Tuesday AM</string>
       </property>
      </widget>
     </item>
-    <item row="5" column="0">
+    <item row="7" column="0">
      <widget class="QCheckBox" name="wedAMCheckBox">
+      <property name="minimumSize">
+       <size>
+        <width>0</width>
+        <height>40</height>
+       </size>
+      </property>
       <property name="text">
        <string>Wednesday AM</string>
       </property>
      </widget>
     </item>
-    <item row="5" column="1">
-     <widget class="QComboBox" name="comboBox_5"/>
-    </item>
-    <item row="6" column="0">
+    <item row="7" column="1">
      <widget class="QCheckBox" name="wedPMCheckBox">
       <property name="text">
        <string>Wednesday PM</string>
       </property>
      </widget>
     </item>
-    <item row="0" column="1">
+    <item row="11" column="1">
+     <widget class="QCheckBox" name="fridayPMCheckBox">
+      <property name="text">
+       <string>Friday PM</string>
+      </property>
+     </widget>
+    </item>
+    <item row="12" column="1">
      <widget class="QDateEdit" name="dateEdit">
       <property name="calendarPopup">
        <bool>true</bool>
       </property>
      </widget>
     </item>
-    <item row="4" column="0">
-     <widget class="QCheckBox" name="tuesPMCheckBox">
-      <property name="text">
-       <string>Tuesday PM</string>
-      </property>
-     </widget>
-    </item>
-    <item row="0" column="2">
-     <widget class="QPushButton" name="changeButton">
+    <item row="3" column="2">
+     <widget class="QPushButton" name="newSessionsButton">
       <property name="maximumSize">
        <size>
         <width>150</width>
@@ -172,7 +207,21 @@
        </size>
       </property>
       <property name="text">
-       <string>Add Change</string>
+       <string>New</string>
+      </property>
+     </widget>
+    </item>
+    <item row="13" column="0">
+     <widget class="QLabel" name="label_2">
+      <property name="text">
+       <string>Week finishing</string>
+      </property>
+     </widget>
+    </item>
+    <item row="13" column="1">
+     <widget class="QDateEdit" name="endDateEdit">
+      <property name="calendarPopup">
+       <bool>true</bool>
       </property>
      </widget>
     </item>

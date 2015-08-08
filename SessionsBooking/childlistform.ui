@@ -42,7 +42,24 @@
       </property>
      </widget>
     </item>
-    <item row="1" column="1">
+    <item row="4" column="0">
+     <widget class="QComboBox" name="monthCombo">
+      <property name="maximumSize">
+       <size>
+        <width>200</width>
+        <height>16777215</height>
+       </size>
+      </property>
+     </widget>
+    </item>
+    <item row="4" column="2">
+     <widget class="QPushButton" name="printSessionsButton">
+      <property name="text">
+       <string>Produce sheets</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="2">
      <widget class="QPushButton" name="sessionsButton">
       <property name="maximumSize">
        <size>
@@ -55,7 +72,7 @@
       </property>
      </widget>
     </item>
-    <item row="3" column="0" colspan="2">
+    <item row="3" column="0" colspan="3">
      <widget class="QTableView" name="tableView">
       <property name="sizePolicy">
        <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
@@ -77,6 +94,16 @@
       </property>
       <property name="styleSheet">
        <string notr="true"/>
+      </property>
+     </widget>
+    </item>
+    <item row="4" column="1">
+     <widget class="QComboBox" name="yearCombo">
+      <property name="maximumSize">
+       <size>
+        <width>100</width>
+        <height>16777215</height>
+       </size>
       </property>
      </widget>
     </item>

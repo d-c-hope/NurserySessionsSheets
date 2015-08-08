@@ -6,7 +6,9 @@
 
 QT       += core gui
 
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+greaterThan(QT_MAJOR_VERSION, 4.8): QT += widgets
+
+
 
 TARGET = SessionsBooking
 TEMPLATE = app
@@ -27,7 +29,10 @@ SOURCES += main.cpp\
     sessionsreader.cpp \
     sessionshelpers.cpp \
     attendancesheets.cpp \
-    childWeeklySessions.cpp
+    childWeeklySessions.cpp \
+    monthrange.cpp \
+    appConstants.cpp \
+    apputils.cpp
 
 HEADERS  += mainwindow.h \
     childlistform.h \
@@ -43,7 +48,10 @@ HEADERS  += mainwindow.h \
     sessionsreader.h \
     childWeeklySessions.h \
     sessionshelpers.h \
-    attendancesheets.h
+    attendancesheets.h \
+    monthrange.h \
+    appConstants.h \
+    apputils.h
 
 FORMS    += mainwindow.ui \
     childlistform.ui \
@@ -53,7 +61,9 @@ FORMS    += mainwindow.ui \
 
 INCLUDEPATH += /Users/david_hope2/Desktop/boost_1_58_0
 
-QMAKE_CXXFLAGS += -std=c++11
+#QMAKE_CXXFLAGS += -std=c++11
+QMAKE_CXXFLAGS_CXX11 = -std=c++14 -stdlib=libc++
+CONFIG += c++11
 
 #INCLUDEPATH += C:/boost/boost_1_53_0/
 #LIBS += "-LC:/boost/boost_1_53_0/stage/lib/"

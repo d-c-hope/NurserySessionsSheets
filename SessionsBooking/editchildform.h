@@ -21,9 +21,11 @@ public:
     ~EditChildForm();
     Child getChild();
     Child getOriginal();
+    bool childIsDeleted;
 
 public slots:
     void onGoBackClicked();
+    void onDeleteClicked();
 
 
 private:

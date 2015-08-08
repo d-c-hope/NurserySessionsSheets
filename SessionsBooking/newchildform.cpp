@@ -30,7 +30,7 @@ NewChildForm::NewChildForm(QWidget *parent, PageNavigator* _nav) :
 //    std::vector<std::string> v = { "xyzzy", "plugh", "abracadabra" };
     std::vector<std::string> months = {"January", "February", "March", "April", "May", "June", "July","August","September","October","November","December"};
 
-    std::vector<int> yearsI = TimeUtils::getYears();
+    std::vector<int> yearsI = TimeUtils::getYears(6, 0);
 
     std::vector<std::string> years(yearsI.size());
     std::transform (yearsI.begin(), yearsI.end(), years.begin(), [](int i) {
@@ -62,7 +62,7 @@ Child NewChildForm::getChild() {
     int day = ui->dayCombo->currentIndex();
     int month = ui->monthCombo->currentIndex();
     int yearIdx = ui->yearCombo->currentIndex();
-    std::vector<int> years = TimeUtils::getYears();
+    std::vector<int> years = TimeUtils::getYears(6, 1);
     int year = years[yearIdx];
 
     struct std::tm tm;

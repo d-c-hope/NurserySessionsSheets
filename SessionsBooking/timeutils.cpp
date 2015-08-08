@@ -24,6 +24,8 @@ namespace TimeUtils {
 
     using namespace std::chrono;
 
+//    std::vector<std::string> months = {"January", "February", "March", "April", "May", "June", "July","August","September","October","November","December"};
+
     std::string timePointDateToString(std::chrono::system_clock::time_point date) {
         std::stringstream s;
         std::time_t dateT = std::chrono::system_clock::to_time_t(date);
@@ -43,10 +45,20 @@ namespace TimeUtils {
     }
 
 
+    std::tuple<int, int, int> timePointToDate(std::chrono::system_clock::time_point date) {
+        std::time_t dateT = std::chrono::system_clock::to_time_t(date);
+        std::tm* tm = std::localtime(&dateT);
+//        QDate retDate(tm->tm_year+1900, tm->tm_mon+1, tm->tm_mday);
+
+        return std::make_tuple(tm->tm_year+1900, tm->tm_mon+1, tm->tm_mday);
+
+    }
+
+
     QDate timePointTQDate(std::chrono::system_clock::time_point date) {
         std::time_t dateT = std::chrono::system_clock::to_time_t(date);
         std::tm* tm = std::localtime(&dateT);
-        QDate retDate(tm->tm_year+1900, tm->tm_mon, tm->tm_mday);
+        QDate retDate(tm->tm_year+1900, tm->tm_mon+1, tm->tm_mday);
         return retDate;
     }
 
@@ -65,7 +77,9 @@ namespace TimeUtils {
     }
 
 
-    std::vector<int> getYears() {
+    // get a list of years starting from this year - prev to this year + next. e.g. if now
+    // is 2015 and prev is 2 and next one we get 2013, 2014, 2015, 2016
+    std::vector<int> getYears(int prev, int next) {
         // get the year now
         std::vector<int> yearsI;
         auto timeNow = std::chrono::system_clock::now();
@@ -73,7 +87,8 @@ namespace TimeUtils {
         tm utc_tm = *gmtime(&tt);
         int yearNow = utc_tm.tm_year + 1900;
 
-        boost::push_back(yearsI, boost::irange(yearNow-6, yearNow+1));
+//        boost::push_back(yearsI, boost::irange(yearNow-6, yearNow+1));
+        boost::push_back(yearsI, boost::irange(yearNow-prev, yearNow+next+1));
 
         return yearsI;
     }
@@ -106,5 +121,44 @@ namespace TimeUtils {
         else change = (dayOfWeek - reqDay) + 7;
         return system_clock::now() + std::chrono::hours(24*change);
     }
+
+
+//    // Month is 1-12
+//    system_clock::time_point getStartOfMonth(int month, int year) {
+////        std::time_t dateT = std::chrono::system_clock::to_time_t(date);
+////        std::tm tm = *std::localtime(&dateT);
+////        int dayOfWeek = tm.tm_wday;
+////        int change;
+////        if (dayOfWeek <= reqDay) change = reqDay - dayOfWeek;
+////        else change = (dayOfWeek - reqDay) + 7;
+////        return system_clock::now() + std::chrono::hours(24*change);
+
+
+////        struct std::tm tm;
+////        memset(&tm, 0, sizeof(struct tm));
+////        tm.tm_year = year - 1900;
+////        tm.tm_mon = month-1;
+////        tm.tm_mday = 1;
+
+//        system_clock::time_point startOfMonth = dateToTimePoint(1, month, year);
+//    }
+
+
+    int daysInMonth(int month, int year) {
+        int numberOfDays;
+        if (month == 4 || month == 6 || month == 9 || month == 11) {
+            numberOfDays = 30;
+        }
+        else if (month == 2) {
+            bool isLeapYear = (year % 4 == 0 && year % 100 != 0) || (year % 400 == 0);
+            if (isLeapYear) numberOfDays = 29;
+            else numberOfDays = 28;
+        }
+        else numberOfDays = 31;
+
+        return numberOfDays;
+
+    }
+
 
 }

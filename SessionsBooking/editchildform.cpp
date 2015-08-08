@@ -34,7 +34,7 @@ EditChildForm::EditChildForm(Child child, QWidget *parent, PageNavigator* _nav) 
         return std::to_string(i);
     });
     std::vector<std::string> months = {"January", "February", "March", "April", "May", "June", "July","August","September","October","November","December"};
-    std::vector<int> yearsI = TimeUtils::getYears();
+    std::vector<int> yearsI = TimeUtils::getYears(6,1);
 
     std::vector<std::string> years(yearsI.size());
     std::transform (yearsI.begin(), yearsI.end(), years.begin(), [](int i) {
@@ -56,6 +56,8 @@ EditChildForm::EditChildForm(Child child, QWidget *parent, PageNavigator* _nav) 
     QPushButton* goBackButton = ui->goBackButton;
     connect(goBackButton, SIGNAL ( clicked() ), this, SLOT ( onGoBackClicked()));
 
+    QPushButton* deleteButton = ui->goBackButton;
+    connect(deleteButton, SIGNAL ( clicked() ), this, SLOT ( onDeleteClicked()));
 
     ui->firstNameEdit->setText(QString::fromStdString(child.firstName));
     ui->lastNameEdit->setText(QString::fromStdString(child.lastName));
@@ -80,6 +82,8 @@ EditChildForm::EditChildForm(Child child, QWidget *parent, PageNavigator* _nav) 
         if (years[yearIdx] == yearStr ) break;
     }
     ui->yearCombo->setCurrentIndex(yearIdx);
+
+    childIsDeleted = false;
 }
 
 
@@ -97,6 +101,13 @@ void EditChildForm::onGoBackClicked() {
 }
 
 
+void EditChildForm::onDeleteClicked() {
+    std::cout << "Going back with deletion" << std::endl;
+    childIsDeleted = true;
+    navigator->goBack();
+}
+
+
 Child EditChildForm::getChild() {
 
     std::string firstName = ui->firstNameEdit->text().toStdString();
@@ -104,7 +115,7 @@ Child EditChildForm::getChild() {
     int day = ui->dayCombo->currentIndex();
     int month = ui->monthCombo->currentIndex();
     int yearIdx = ui->yearCombo->currentIndex();
-    std::vector<int> years = TimeUtils::getYears();
+    std::vector<int> years = TimeUtils::getYears(6, 0);
     int year = years[yearIdx];
 
     struct std::tm tm;

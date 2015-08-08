@@ -1,8 +1,9 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include <QMainWindow>
-#include <QStackedWidget>
+#include <QtWidgets/QMainWindow>
+//#include <QtGui/QMainWindow>
+#include <QtWidgets/QStackedWidget>
 #include <list>
 #include <pagenavigator.h>
 

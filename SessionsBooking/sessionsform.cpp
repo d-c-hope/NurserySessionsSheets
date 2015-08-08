@@ -83,7 +83,7 @@ void SessionsForm::onNewSessionsClicked() {
     if (currentIndex == listOfWeeklySessions.size() - 1) {
         ChildWeeklySessions cwSessions = produceNewWeeklySessions();
 //        cwSessions.childId = child.id;
-//        listOfWeeklySessions.push_back(cwSessions);
+        listOfWeeklySessions.push_back(cwSessions);
     }
     else {
 
@@ -196,7 +196,8 @@ void SessionsForm::loadFromCWSessions(std::vector<ChildWeeklySessions> cwSession
 
     QDate startDate = TimeUtils::timePointTQDate(currentSessions.startDate);
     QDate endDate = TimeUtils::timePointTQDate(currentSessions.endDate);
-
+    startDateEdit->setDate(startDate);
+    endDateEdit->setDate(endDate);
 
 }
 

@@ -17,7 +17,8 @@ void SessionsReader::writeSessions(sessionsMap sessionsM, std::string filename) 
     for (auto& kv : sessionsM) {
         for (auto sessionSet: kv.second) {
             std::string startDate = TimeUtils::timePointDateToString(sessionSet.startDate);
-            out << sessionSet.childId << ", " << startDate << ", ";
+            std::string endDate = TimeUtils::timePointDateToString(sessionSet.endDate);
+            out << sessionSet.childId << ", " << startDate << ", " << endDate << ", ";
             std::stringstream listStrStr;
             auto sTimes = sessionSet.sessionsList;
             std::copy(sTimes.begin(), sTimes.end(), std::ostream_iterator<std::string>(listStrStr, ","));
@@ -70,10 +71,12 @@ sessionsMap SessionsReader::readSessions(std::string filename)
 //        boost::algorithm::trim(strs[1]);
         int childId = atoi(strs[0].c_str());
         std::string dateStr = strs[1];
+        std::string endDateStr = strs[2];
         childSessions.childId = childId;
         childSessions.startDate = TimeUtils::timeStrToTimePointDate(dateStr);
+        childSessions.endDate = TimeUtils::timeStrToTimePointDate(endDateStr);
 
-        std::copy( strs.begin()+2, strs.end(), std::back_inserter(childSessions.sessionsList) );
+        std::copy( strs.begin()+3, strs.end(), std::back_inserter(childSessions.sessionsList) );
 
         if ( sessionsM.find(childId) != sessionsM.end() ) {
             sessionsM[childId].push_back(childSessions);

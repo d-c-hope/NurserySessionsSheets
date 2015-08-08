@@ -81,9 +81,10 @@ void MainWindow::goBack() {
             EditChildForm* currentNCF = dynamic_cast<EditChildForm*>(current);
             Child c = currentNCF->getChild();
             Child original = currentNCF->getOriginal();
+            bool isDeleted = currentNCF->childIsDeleted;
             std::cout << "was edit child page "<< c.firstName;
             ChildListForm* prevConcrete = dynamic_cast<ChildListForm*>(prev);
-            prevConcrete->updateChild(original, c);
+            prevConcrete->updateChild(original, c, isDeleted);
         }
         else if (current->name == "sessions"){
 //            SessionsForm* currentSF = dynamic_cast<SessionsForm*>(current);

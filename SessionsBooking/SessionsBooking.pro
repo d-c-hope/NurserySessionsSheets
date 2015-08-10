@@ -67,3 +67,8 @@ CONFIG += c++11
 
 #INCLUDEPATH += C:/boost/boost_1_53_0/
 #LIBS += "-LC:/boost/boost_1_53_0/stage/lib/"
+
+DISTFILES +=
+
+RESOURCES += \
+    images.qrc

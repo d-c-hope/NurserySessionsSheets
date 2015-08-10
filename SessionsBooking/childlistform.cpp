@@ -2,6 +2,7 @@
 #include "QString"
 #include "QStringList"
 #include "QStandardPaths"
+#include <QStyle>
 
 
 #include "childlistform.h"
@@ -29,13 +30,31 @@ ChildListForm::ChildListForm(QWidget *parent, PageNavigator* _navigator) :
     std::vector<Child> children = clReader.readList("");
     if (children.size() > 0) selectedChild = children[0];
 
-    model = new TableModel(children);
+    model = new TableModel(children, std::vector<std::string>{"First Name", "Last Name", "DOB"});
 
     tView = ui->tableView;
     tView->setSelectionBehavior(QAbstractItemView::SelectRows);
+    model->setHeaderData(0, Qt::Horizontal, tr("Name"));
+
 
     tView->setModel(model);
+    tView->setColumnWidth(0,180);
+    tView->setColumnWidth(1,180);
+    tView->setColumnWidth(2,100);
 
+    int vwidth = tView->verticalHeader()->width();
+    int hwidth = tView->horizontalHeader()->length();
+    int swidth = 0;//tView->style()->pixelMetric(QStyle::PM_ScrollBarExtent);
+    int fwidth = tView->frameWidth() * 2;
+
+    tView->setFixedWidth(vwidth + hwidth + swidth + fwidth);
+
+
+//    tView->horizontalHeader()->setResizeMode(QHeaderView::Stretch);
+
+//    ui->tableView->setVisible(false);
+//    ui->tableView->resizeColumnsToContents();
+//    ui->tableView->w
 
     std::vector<std::string> months = {"January", "February", "March", "April", "May", "June", "July","August","September","October","November","December"};
     std::vector<int> yearsI = TimeUtils::getYears(1,3);
@@ -144,9 +163,11 @@ void ChildListForm::addChild(Child child) {
 
 
 void ChildListForm::updateChild(Child original, Child updated, bool isDeleted) {
-    model->updateItem(original, updated);
+    if (! isDeleted) model->updateItem(original, updated);
+    else model->removeItem(original);
     ChildListReader clReader;
     clReader.writeList(model->getListOfChildren(), "");
+
 }
 
 

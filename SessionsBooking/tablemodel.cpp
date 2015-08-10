@@ -11,12 +11,15 @@ TableModel::TableModel(QObject *parent)
 }
 
 
-TableModel::TableModel(std::vector<Child> _listOfChildren, QObject *parent)
+TableModel::TableModel(std::vector<Child> _listOfChildren,
+                       std::vector<std::string> _headerStrings,
+                       QObject *parent)
     : QAbstractTableModel(parent)
 {
     std::vector<Child> listofChildren2 = _listOfChildren;
     std::cout << _listOfChildren[0].firstName;
     listOfChildren = _listOfChildren;
+    headerStrings = _headerStrings;
     //std::cout << "raaa";
 }
 
@@ -69,19 +72,8 @@ QVariant TableModel::headerData(int section, Qt::Orientation orientation, int ro
         return QVariant();
 
     if (orientation == Qt::Horizontal) {
-        switch (section) {
-            case 0:
-                return tr("First Name");
-
-            case 1:
-                return tr("Last Name");
-
-            case 2:
-            return tr("Age");
-
-            default:
-                return QVariant();
-        }
+        if (static_cast<int>(section) < headerStrings.size()) return QString::fromStdString(headerStrings[section]);
+        else return QVariant();
     }
     return QVariant();
 }
@@ -108,6 +100,16 @@ void TableModel::updateItem(Child orig, Child updated) {
     auto it = find (listOfChildren.begin(), listOfChildren.end(), orig);
     *it = updated;
     endInsertRows();
+}
+
+
+void TableModel::removeItem(Child orig) {
+    QModelIndex mi;
+    auto it = find (listOfChildren.begin(), listOfChildren.end(), orig);
+    int index = std::distance(listOfChildren.begin(), it);
+    beginRemoveRows(mi, index, index);
+    listOfChildren.erase (it);
+    endRemoveRows();
 }
 
 

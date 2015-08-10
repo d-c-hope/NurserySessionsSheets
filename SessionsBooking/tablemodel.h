@@ -15,7 +15,9 @@ class TableModel : public QAbstractTableModel
 
 public:
     TableModel(QObject *parent = 0);
-    TableModel(std::vector<Child> _listOfChildren, QObject *parent = 0);
+    TableModel(std::vector<Child> _listOfChildren,
+               std::vector<std::string> _headerStrings,
+               QObject *parent = 0);
 
     int rowCount(const QModelIndex &parent) const;
     int columnCount(const QModelIndex &parent) const;
@@ -24,10 +26,12 @@ public:
     std::vector<Child> getListOfChildren();
     void addItem(Child c);
     void updateItem(Child original, Child updated);
+    void removeItem(Child orig);
 
 
 private:
     std::vector<Child> listOfChildren;
+    std::vector<std::string> headerStrings;
 };
 
 

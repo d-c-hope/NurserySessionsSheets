@@ -13,18 +13,23 @@
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true">QMainWindow {
+	background-color:white;
+}</string>
+  </property>
   <widget class="QWidget" name="centralWidget">
    <widget class="QStackedWidget" name="stackedWidget">
     <property name="geometry">
      <rect>
       <x>-1</x>
       <y>-1</y>
-      <width>1031</width>
-      <height>731</height>
+      <width>900</width>
+      <height>700</height>
      </rect>
     </property>
     <property name="currentIndex">
-     <number>1</number>
+     <number>0</number>
     </property>
     <widget class="QWidget" name="page"/>
     <widget class="QWidget" name="page_2"/>

@@ -56,7 +56,7 @@ EditChildForm::EditChildForm(Child child, QWidget *parent, PageNavigator* _nav) 
     QPushButton* goBackButton = ui->goBackButton;
     connect(goBackButton, SIGNAL ( clicked() ), this, SLOT ( onGoBackClicked()));
 
-    QPushButton* deleteButton = ui->goBackButton;
+    QPushButton* deleteButton = ui->deleteButton;
     connect(deleteButton, SIGNAL ( clicked() ), this, SLOT ( onDeleteClicked()));
 
     ui->firstNameEdit->setText(QString::fromStdString(child.firstName));

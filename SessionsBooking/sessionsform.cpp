@@ -61,9 +61,9 @@ SessionsForm::SessionsForm(Child child, QWidget *parent, PageNavigator* _navigat
 //    endDateEdit->setVisible(false);
 
     SessionsReader sessionsReader;
-    sessionsM = sessionsReader.readSessions("");
+    sessionsM = sessionsReader.readSessions();
     sessionsM = SessionsHelpers::filterOldSessions(sessionsM, 31);
-    sessionsReader.writeSessions(sessionsM, "");
+    sessionsReader.writeSessions(sessionsM);
     doInitialLoadFromMap(sessionsM);
 
     isOnCurrent = true;
@@ -248,7 +248,7 @@ void SessionsForm::onSaveClicked() {
 //    }
 
     SessionsReader sessionsReader;
-    sessionsReader.writeSessions(sessionsM, "");
+    sessionsReader.writeSessions(sessionsM);
     navigator->goBack();
 
 }

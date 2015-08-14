@@ -12,9 +12,6 @@
 #include <iostream>
 #include <algorithm>
 
-//AttendanceSheets::AttendanceSheets()
-//{
-//}
 using namespace std::chrono;
 
 
@@ -31,7 +28,7 @@ bool sortFunc(Child c1, Child c2) { return (c1.dob < c2.dob); }
 
 std::vector<std::string> AttendanceSheets::createSheets(std::vector<Child> children, MonthRange monthRange) {
     SessionsReader sessionsReader;
-    sessionsMap sessionsM = sessionsReader.readSessions("");
+    sessionsMap sessionsM = sessionsReader.readSessions();
     std::vector<std::string> sheets;
 
     std::sort(children.begin(), children.end(), sortFunc);
@@ -249,12 +246,10 @@ std::string AttendanceSheets::getSheetsTextForRoom(std::vector<Child> children, 
             if (halfDayList.size() > 0) {
                 auto child = halfDayList.front();
                 entries.push_back(child.firstName + " " + child.lastName);
-//                ss << child.firstName << " " << child.lastName << ", ";
                 halfDayList.pop_front();
             }
             else {
                 entries.push_back(" ");
-//                ss << ",  ";
             }
             if (halfDayList != friPmChildren) ss << ", ";
 

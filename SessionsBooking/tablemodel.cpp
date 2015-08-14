@@ -17,17 +17,14 @@ TableModel::TableModel(std::vector<Child> _listOfChildren,
     : QAbstractTableModel(parent)
 {
     std::vector<Child> listofChildren2 = _listOfChildren;
-    std::cout << _listOfChildren[0].firstName;
     listOfChildren = _listOfChildren;
     headerStrings = _headerStrings;
-    //std::cout << "raaa";
 }
 
 
 int TableModel::rowCount(const QModelIndex &parent) const
 {
     Q_UNUSED(parent);
-//    std::cout << " In Row Count" << listOfChildren.size();
     return listOfChildren.size();
 }
 
@@ -96,10 +93,10 @@ void TableModel::addItem(Child c) {
 
 void TableModel::updateItem(Child orig, Child updated) {
     QModelIndex mi;
-    beginInsertRows(mi, listOfChildren.size(), listOfChildren.size());
+//    beginInsertRows(mi, listOfChildren.size(), listOfChildren.size());
     auto it = find (listOfChildren.begin(), listOfChildren.end(), orig);
     *it = updated;
-    endInsertRows();
+//    endInsertRows();
 }
 
 
@@ -111,6 +108,32 @@ void TableModel::removeItem(Child orig) {
     listOfChildren.erase (it);
     endRemoveRows();
 }
+
+
+//QModelIndex TreeModel::index(int row, int column, const QModelIndex &parent)
+//            const
+//{
+//    if (!hasIndex(row, column, parent))
+//        return QModelIndex();
+
+//    TreeItem *parentItem;
+
+//    if (!parent.isValid())
+//        parentItem = rootItem;
+//    else
+//        parentItem = static_cast<TreeItem*>(parent.internalPointer());
+
+//    TreeItem *childItem = parentItem->child(row);
+//    if (childItem)
+//        return createIndex(row, column, childItem);
+//    else
+//        return QModelIndex();
+//}
+
+
+
+
+
 
 
 

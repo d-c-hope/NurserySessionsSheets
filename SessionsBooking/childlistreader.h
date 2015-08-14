@@ -5,6 +5,7 @@
 #include <fstream>
 #include <iostream>
 #include <vector>
+
 #include "child.h"
 
 
@@ -12,8 +13,8 @@ class ChildListReader
 {
 public:
     ChildListReader();
-    std::vector<Child> readList(std::string filename);
-    void writeList(std::vector<Child>, std::string filename);
+    std::vector<Child> readList();
+    void writeList(std::vector<Child>);
 };
 
 #endif // CHILDLISTREADER_H

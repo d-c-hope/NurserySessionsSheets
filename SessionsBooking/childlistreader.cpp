@@ -5,29 +5,39 @@
 #include <ctime>
 #include <chrono>
 #include <iomanip>
+#include <boost/filesystem.hpp>
 
 #include "child.h"
 #include "timeutils.h"
+#include <appConstants.h>
+
+
+using namespace boost::filesystem;
+
 
 ChildListReader::ChildListReader()
 {
 }
 
 
-std::vector<Child> ChildListReader::readList(std::string filename)
+std::vector<Child> ChildListReader::readList()
 {
     std::vector<std::string> lines;
-    std::ifstream in("/Users/david_hope2/Desktop/tmp/childlist.txt");
+    std::vector<Child> children;
+    std::ifstream in(AppConstants::defaultChildListFile);
+    if(in.fail()) {
+        return children;
+    }
+
     char buf[200];
     while(in.getline(buf, 200)) {
         lines.push_back(std::string(buf));
     }
 
-    std::vector<Child> children;
+
     for (auto line: lines) {
         std::vector<std::string> strs;
         boost::split(strs, line, boost::is_any_of(", "));
-//      std::cout << strs[0] << "*";
       struct tm tm;
       memset(&tm, 0, sizeof(struct tm));
 
@@ -53,8 +63,13 @@ std::vector<Child> ChildListReader::readList(std::string filename)
 
 
 
-void ChildListReader::writeList(std::vector<Child> children, std::string filename) {
-    std::ofstream out("/Users/david_hope2/Desktop/tmp/childlistOut.txt");
+void ChildListReader::writeList(std::vector<Child> children) {
+    std::string filename = AppConstants::defaultChildListFile;
+    if (! exists(AppConstants::appFilesDir)) {
+        create_directory(AppConstants::appFilesDir);
+    }
+
+    std::ofstream out(filename);
     for (auto child: children) {
         std::string dob = TimeUtils::timePointDateToString(child.dob);
         // David, Hope, 20/03/2012

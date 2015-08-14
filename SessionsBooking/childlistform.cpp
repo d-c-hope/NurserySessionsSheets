@@ -3,6 +3,9 @@
 #include "QStringList"
 #include "QStandardPaths"
 #include <QStyle>
+#include <boost/algorithm/string.hpp>
+#include <boost/lexical_cast.hpp>
+#include <boost/algorithm/string.hpp>
 
 
 #include "childlistform.h"
@@ -27,7 +30,7 @@ ChildListForm::ChildListForm(QWidget *parent, PageNavigator* _navigator) :
     printSessionsButton = ui->printSessionsButton;
     navigator = _navigator;
     ChildListReader clReader;
-    std::vector<Child> children = clReader.readList("");
+    std::vector<Child> children = clReader.readList();
     if (children.size() > 0) selectedChild = children[0];
 
     model = new TableModel(children, std::vector<std::string>{"First Name", "Last Name", "DOB"});
@@ -158,7 +161,7 @@ void ChildListForm::onPrintSessionsClick() {
 void ChildListForm::addChild(Child child) {
     model->addItem(child);
     ChildListReader clReader;
-    clReader.writeList(model->getListOfChildren(), "");
+    clReader.writeList(model->getListOfChildren());
 }
 
 
@@ -166,7 +169,7 @@ void ChildListForm::updateChild(Child original, Child updated, bool isDeleted) {
     if (! isDeleted) model->updateItem(original, updated);
     else model->removeItem(original);
     ChildListReader clReader;
-    clReader.writeList(model->getListOfChildren(), "");
+    clReader.writeList(model->getListOfChildren());
 
 }
 

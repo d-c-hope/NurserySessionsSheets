@@ -72,3 +72,12 @@ DISTFILES +=
 
 RESOURCES += \
     images.qrc
+
+macx: LIBS += /usr/local/boostBuild/lib/libboost_system.a
+macx: LIBS += /usr/local/boostBuild/lib/libboost_filesystem.a
+
+#INCLUDEPATH += $$PWD/../../../../../../usr/local/boostBuild/include
+#DEPENDPATH += $$PWD/../../../../../../usr/local/boostBuild/include
+
+#macx: PRE_TARGETDEPS += $$PWD/../../../../../../usr/local/boostBuild/lib/libboost_system.a
+#macx: PRE_TARGETDEPS += $$PWD/../../../../../../usr/local/boostBuild/lib/libboost_filesystem.a

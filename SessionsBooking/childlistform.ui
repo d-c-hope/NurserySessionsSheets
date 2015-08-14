@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1024</width>
+    <width>900</width>
     <height>768</height>
    </rect>
   </property>
@@ -32,15 +32,22 @@ min-height: 13px;
 max-height: 13px;
 }
 
+QTableView QHeaderView::section {
+background-color:rgb(236, 236, 236) ;
+border:none;
+padding-top: 8px;
+padding-bottom: 8px;
+}
+
 </string>
   </property>
   <widget class="QWidget" name="gridLayoutWidget">
    <property name="geometry">
     <rect>
-     <x>160</x>
-     <y>70</y>
-     <width>621</width>
-     <height>531</height>
+     <x>30</x>
+     <y>20</y>
+     <width>731</width>
+     <height>621</height>
     </rect>
    </property>
    <layout class="QGridLayout" name="gridLayout">
@@ -116,6 +123,12 @@ max-height: 13px;
       <property name="styleSheet">
        <string notr="true"/>
       </property>
+      <attribute name="horizontalHeaderVisible">
+       <bool>true</bool>
+      </attribute>
+      <attribute name="verticalHeaderVisible">
+       <bool>false</bool>
+      </attribute>
      </widget>
     </item>
     <item row="4" column="1">

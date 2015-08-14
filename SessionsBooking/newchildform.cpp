@@ -73,13 +73,16 @@ Child NewChildForm::getChild() {
     auto ageTp = std::chrono::system_clock::from_time_t(std::mktime(&tm));
 
     ChildListReader clReader;
-    std::vector<Child> children = clReader.readList("");
-    std::vector<int> childrenIds(children.size());
-    std::transform(children.begin(), children.end(), childrenIds.begin(),
-       [](Child child) -> double { return child.id; });
-    auto it = max_element(std::begin(childrenIds), std::end(childrenIds));
-    int max = *it;
+    std::vector<Child> children = clReader.readList();
+    int max = 0;
+    if (children.size() > 0) {
+        std::vector<int> childrenIds(children.size());
 
+        std::transform(children.begin(), children.end(), childrenIds.begin(),
+           [](Child child) -> double { return child.id; });
+        auto it = max_element(std::begin(childrenIds), std::end(childrenIds));
+        int max = *it;
+    }
 
     Child c(max+1, firstName, lastName, ageTp);
 

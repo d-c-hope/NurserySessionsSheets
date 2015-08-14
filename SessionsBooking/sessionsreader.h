@@ -17,8 +17,8 @@ class SessionsReader
 {
 public:
     SessionsReader();
-    sessionsMap readSessions(std::string filename);
-    void writeSessions(sessionsMap sessionsM, std::string filename);
+    sessionsMap readSessions();
+    void writeSessions(sessionsMap sessionsM);
 
 private:
     static sessionsMap sessionsM;

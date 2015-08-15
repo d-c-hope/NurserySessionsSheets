@@ -1,13 +1,11 @@
+#include <QMessageBox>
+
 #include "sessionsform.h"
 #include "ui_sessionsform.h"
 #include "sessionsreader.h"
 #include "timeutils.h"
 #include "sessionshelpers.h"
 
-//std::string s = R"(abc)"
-//                    R"( followed by not a newline: \n)"
-//                    " which is then followed by a non-raw literal that's concatenated \n with"
-//                    " an embedded non-raw newline";
 
 std::string headerPrefix = "Weekly sessions for ";
 std::string subHeadMain = R"(These are the standard weekly sessions for a child.
@@ -48,17 +46,13 @@ SessionsForm::SessionsForm(Child child, QWidget *parent, PageNavigator* _navigat
 
     viewType = CURRENT;
 
-//    isTemporaryCheckBox = ui->isTempCsheckBox;
     connect(saveButton, SIGNAL ( clicked() ), this, SLOT ( onSaveClicked() ) );
     connect(cancelButton, SIGNAL ( clicked() ), this, SLOT ( onCancelClicked() ) );
     connect(newSessionsButton, SIGNAL ( clicked() ), this, SLOT ( onNewSessionsClicked() ) );
     connect(prevSessionsButton, SIGNAL ( clicked() ), this, SLOT ( onPrevSessionsClicked() ) );
 
-
-
-//    dateEdit->setDate(QDate::currentDate());
-//    endDateEdit->setDate(QDate::currentDate());
-//    endDateEdit->setVisible(false);
+    startDateEdit->setDate(QDate::currentDate());
+    endDateEdit->setDate(QDate::currentDate());
 
     SessionsReader sessionsReader;
     sessionsM = sessionsReader.readSessions();
@@ -70,9 +64,6 @@ SessionsForm::SessionsForm(Child child, QWidget *parent, PageNavigator* _navigat
 }
 
 
-
-
-
 void SessionsForm::onCancelClicked() {
     navigator->goBack();
 }
@@ -80,9 +71,13 @@ void SessionsForm::onCancelClicked() {
 
 void SessionsForm::onNewSessionsClicked() {
 
+    bool isUpdated = updateWithWarningDialog();
+    if (! isUpdated) return;
+
+    // Doesn't apply if index is 0 which is fine - don't want more pages if nothing on current one
+    // Though possible user wants to add one set then another in one go - TODO look at this
     if (currentIndex == listOfWeeklySessions.size() - 1) {
         ChildWeeklySessions cwSessions = produceNewWeeklySessions();
-//        cwSessions.childId = child.id;
         listOfWeeklySessions.push_back(cwSessions);
     }
     else {
@@ -91,18 +86,14 @@ void SessionsForm::onNewSessionsClicked() {
     currentIndex += 1;
     loadFromCWSessions(listOfWeeklySessions, currentIndex);
 
-//    viewType = NEXT;
-//    if (isOnCurrent) {
-//        isOnCurrent = false;
-//        endDateEdit->setVisible(true);
-//    }
-//    else isOnCurrent = true;
-//    navigator->goBack();
 }
 
 
 void SessionsForm::onPrevSessionsClicked() {
     if (currentIndex != 0) {
+        bool isUpdated = updateWithWarningDialog();
+        if (! isUpdated) return;
+
         currentIndex -= 1;
         loadFromCWSessions(listOfWeeklySessions, currentIndex);
     }
@@ -115,19 +106,15 @@ void SessionsForm::doInitialLoadFromMap(sessionsMap sessions) {
     if (sessions.size()==0) return;
     if ( sessions.find(child.id) == sessions.end() ) return;
 
-    auto validSessions = SessionsHelpers::filterOldSessionsPerChild(sessions[child.id], 0);
+    auto validSessions = SessionsHelpers::filterOldSessionsPerChild(sessions[child.id], 31);
     listOfWeeklySessions = validSessions;
     if (listOfWeeklySessions.size() == 0) {
         ChildWeeklySessions cwSessions = produceNewWeeklySessions();
-//        cwSessions.childId = child.id;
         listOfWeeklySessions.push_back(cwSessions);
     }
 
     loadFromCWSessions(listOfWeeklySessions, 0);
 
-//    if (listOfWeeklySessions.size() > 1) {
-//        newSessionsButton->setText("Next");
-//    }
 }
 
 
@@ -152,8 +139,6 @@ void SessionsForm::loadFromCWSessions(std::vector<ChildWeeklySessions> cwSession
 
     ChildWeeklySessions currentSessions = listOfWeeklySessions[index];
 
-
-//    ChildWeeklySessions ses = sessions[child.id][0];
     std::vector<std::string> weeklyS = currentSessions.sessionsList;
 
     bool isMonAm = std::find(weeklyS.begin(), weeklyS.end(), "monAM") != weeklyS.end();
@@ -168,7 +153,7 @@ void SessionsForm::loadFromCWSessions(std::vector<ChildWeeklySessions> cwSession
     bool isFriPm = std::find(weeklyS.begin(), weeklyS.end(), "friPM") != weeklyS.end();
 
     ui->monAMCheckBox->setChecked(isMonAm);
-    ui->monAMCheckBox->setChecked(isMonPm);
+    ui->monPMCheckBox->setChecked(isMonPm);
     ui->tuesAMCheckBox->setChecked(isTueAm);
     ui->tuesPMCheckBox->setChecked(isTuePm);
     ui->wedAMCheckBox->setChecked(isWedAm);
@@ -177,8 +162,6 @@ void SessionsForm::loadFromCWSessions(std::vector<ChildWeeklySessions> cwSession
     ui->thursPMCheckBox->setChecked(isThuPm);
     ui->fridayAMCheckBox->setChecked(isFriAm);
     ui->fridayPMCheckBox->setChecked(isFriPm);
-
-
 
     if (currentIndex < listOfWeeklySessions.size() - 1) {
         newSessionsButton->setText("Next");
@@ -202,7 +185,21 @@ void SessionsForm::loadFromCWSessions(std::vector<ChildWeeklySessions> cwSession
 }
 
 
-void SessionsForm::updateListOfSessions() {
+bool SessionsForm::updateWithWarningDialog() {
+    try{
+        updateListOfSessions();
+        return true;
+    }
+    catch(InvalidSessionDates& e) {
+        QMessageBox msgBox;
+        msgBox.setText("Invalid dates - check end date is not before start date or doesn't overlap with existing");
+        msgBox.exec();
+        return false;
+    }
+}
+
+
+void SessionsForm::updateListOfSessions() throw(InvalidSessionDates) {
 
     bool isMonAm = ui->monAMCheckBox->isChecked();
     bool isMonPm = ui->monPMCheckBox->isChecked();
@@ -232,52 +229,53 @@ void SessionsForm::updateListOfSessions() {
     QDate endDate = endDateEdit->date();
     auto timePoint = TimeUtils::dateToTimePoint(startDate.day(), startDate.month(), startDate.year() );
     auto endTimePoint = TimeUtils::dateToTimePoint(endDate.day(), endDate.month(), endDate.year() );
+    if (endTimePoint <= timePoint) throw InvalidSessionDates("Can't have end date before start date");
+
     sessions.startDate = timePoint;
     sessions.endDate = endTimePoint;
-    listOfWeeklySessions[currentIndex] = sessions;
+
+    bool isOverlap = avoidOverlap(sessions, listOfWeeklySessions);
+    if (isOverlap == true) throw InvalidSessionDates("New dates overlap with existing");
+
+    if (listOfWeeklySessions.size() == 0) listOfWeeklySessions.push_back(sessions);
+    else listOfWeeklySessions[currentIndex] = sessions;
 }
 
 
 void SessionsForm::onSaveClicked() {
-    updateListOfSessions();
-    sessionsM[child.id] = listOfWeeklySessions;
-//    if ( sessionsM.find(child.id) != sessionsM.end() ) {
-//        sessionsM[child.id].push_back(listOfWeeklySessions);
-//    } else {
-//        sessionsM[child.id] = std::vector<ChildWeeklySessions>{list};
-//    }
 
-    SessionsReader sessionsReader;
-    sessionsReader.writeSessions(sessionsM);
-    navigator->goBack();
+        bool isUpdated = updateWithWarningDialog();
+        if (! isUpdated) return;
+        sessionsM[child.id] = listOfWeeklySessions;
 
+        SessionsReader sessionsReader;
+        sessionsReader.writeSessions(sessionsM);
+        navigator->goBack();
 }
-//void SessionsForm::onGoBackClicked() {
-//    navigator->goBack();
-//}
-
-//ChildWeeklySessions SessionsForm::getCurrentSessions(std::vector<ChildWeeklySessions> childWeeklySessionsList) {
-//    ChildWeeklySessions current; //= childWeeklySessionsList[0];
-//    std::chrono::system_clock::time_point now = std::chrono::system_clock::now();
-//    for (auto weeklySessions: childWeeklySessionsList) {
-//        if (weeklySessions.startDate < now) current = weeklySessions;
-//    }
-//    return current;
-//}
 
 
-//ChildWeeklySessions SessionsForm::getNextSessions(std::vector<ChildWeeklySessions> childWeeklySessionsList) {
-//    ChildWeeklySessions next;// = childWeeklySessionsList[0];
-//    std::chrono::system_clock::time_point now = std::chrono::system_clock::now();
-//    for (auto weeklySessions: childWeeklySessionsList) {
-//        if (weeklySessions.startDate > now) {
-//            next = weeklySessions;
-//            break;
-//        }
-//    }
-//    return next;
-//}
+bool SessionsForm::avoidOverlap(ChildWeeklySessions newSessions,
+                                std::vector<ChildWeeklySessions> existing) {
+    bool overlap = false;
 
+    for (int i = 0; i < existing.size(); i++) {
+        auto existingS = existing[i];
+
+
+        // if it starts before
+        if ( (newSessions.startDate < existingS.startDate) &&
+             (newSessions.endDate > existingS.startDate) ) {
+            overlap = true;
+        }
+        // if it starts during
+        if ( (newSessions.startDate >= existingS.startDate) &&
+             (newSessions.startDate < existingS.endDate) ) {
+            overlap = true;
+        }
+        if (i == currentIndex) overlap = false;
+    }
+    return overlap;
+}
 
 
 SessionsForm::~SessionsForm()

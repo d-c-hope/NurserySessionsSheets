@@ -45,7 +45,6 @@ QVariant TableModel::data(const QModelIndex &index, int role) const
 
     if (role == Qt::DisplayRole) {
         Child child = listOfChildren[index.row()];
-//        std::cout << "Getting item " << index.column() << std::endl;
         if (index.column() == 0)
                return QString::fromStdString(child.firstName);
         else if (index.column() == 1)

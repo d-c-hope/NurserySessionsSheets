@@ -27,7 +27,6 @@ NewChildForm::NewChildForm(QWidget *parent, PageNavigator* _nav) :
         return std::to_string(i);
     });
 
-//    std::vector<std::string> v = { "xyzzy", "plugh", "abracadabra" };
     std::vector<std::string> months = {"January", "February", "March", "April", "May", "June", "July","August","September","October","November","December"};
 
     std::vector<int> yearsI = TimeUtils::getYears(6, 0);
@@ -50,8 +49,11 @@ NewChildForm::NewChildForm(QWidget *parent, PageNavigator* _nav) :
     }
 
     QPushButton* goBackButton = ui->goBackButton;
+    QPushButton* cancelButton = ui->cancelButton;
     connect(goBackButton, SIGNAL ( clicked() ), this, SLOT ( onGoBackClicked()));
+    connect(cancelButton, SIGNAL ( clicked() ), this, SLOT ( onCancelClicked()));
 
+    isCancelled = false;
 }
 
 
@@ -91,9 +93,6 @@ Child NewChildForm::getChild() {
 }
 
 
-
-
-
 NewChildForm::~NewChildForm()
 {
     delete ui;
@@ -101,7 +100,12 @@ NewChildForm::~NewChildForm()
 
 
 void NewChildForm::onGoBackClicked() {
-    std::cout << "Going back" << std::endl;
+    navigator->goBack();
+}
+
+
+void NewChildForm::onCancelClicked() {
+    isCancelled = true;
     navigator->goBack();
 }
 

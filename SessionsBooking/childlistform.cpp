@@ -52,13 +52,6 @@ ChildListForm::ChildListForm(QWidget *parent, PageNavigator* _navigator) :
 
     tView->setFixedWidth(vwidth + hwidth + swidth + fwidth);
 
-
-//    tView->horizontalHeader()->setResizeMode(QHeaderView::Stretch);
-
-//    ui->tableView->setVisible(false);
-//    ui->tableView->resizeColumnsToContents();
-//    ui->tableView->w
-
     std::vector<std::string> months = {"January", "February", "March", "April", "May", "June", "July","August","September","October","November","December"};
     std::vector<int> yearsI = TimeUtils::getYears(1,3);
 
@@ -99,7 +92,6 @@ void ChildListForm::onRowDoubleClick(const QModelIndex& index) {
     auto listOfChildren = model->getListOfChildren();
     Child child = listOfChildren[index.row()];
     selectedChild = child;
-    std::cout << "On double click on " << child.firstName << child.lastName  << std::endl;
     navigator->goToPage("edit_child");
 }
 
@@ -108,22 +100,16 @@ void ChildListForm::onRowSingleClick(const QModelIndex& index) {
     auto listOfChildren = model->getListOfChildren();
     Child child = listOfChildren[index.row()];
     selectedChild = child;
-    std::cout << "On single click on " << child.firstName << child.lastName  << std::endl;
 }
 
 
 void ChildListForm::onNewChildClick() {
     auto listOfChildren = model->getListOfChildren();
-//    Child child = listOfChildren[index.row()];
-//    std::cout << "On double click on " << child.firstName << child.lastName  << std::endl;
     navigator->goToPage("new_child");
 }
 
 
 void ChildListForm::onSessionsClick() {
-//    auto listOfChildren = model->getListOfChildren();
-//    Child child = listOfChildren[index.row()];
-//    std::cout << "On double click on " << child.firstName << child.lastName  << std::endl;
     navigator->goToPage("sessions");
 }
 
@@ -137,19 +123,14 @@ void ChildListForm::onPrintSessionsClick() {
 
     auto children = model->getListOfChildren();
 
-
     std::vector<std::string> sheets = AttendanceSheets::createSheets(children, MonthRange(month, month, year, year));
     std::string sheetText = sheets[0];
 
-    std::cout << sheetText;
-    std::ostringstream filename(AppConstants::defaultMonthFilePrefix, std::ios_base::ate);
-    filename << TimeUtils::months[month-1] << "_" << year << ".csv";
-    std::cout << filename.str();
-
-    QStandardPaths::HomeLocation;
+    std::ostringstream filepath(AppConstants::defaultMonthFilePrefix, std::ios_base::ate);
+    filepath << TimeUtils::months[month-1] << "_" << year << ".csv";
 
     QString selFilename  = QFileDialog::getSaveFileName(this, tr("Save File"),
-                               QString::fromStdString("/Users/david_hope2/" + filename.str()));
+                               QString::fromStdString(filepath.str()));
 
 
     std::ofstream out(selFilename.toStdString());

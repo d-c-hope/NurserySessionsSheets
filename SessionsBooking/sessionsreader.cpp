@@ -18,12 +18,12 @@ SessionsReader::SessionsReader()
 
 void SessionsReader::writeSessions(sessionsMap sessionsM) {
 
-    std::string filename = AppConstants::defaultChildListFile;
+    std::string filename = AppConstants::defaultSessionsFile;
     if (! exists(AppConstants::appFilesDir)) {
         create_directory(AppConstants::appFilesDir);
     }
 
-    std::ofstream out(AppConstants::defaultSessionsFile);
+    std::ofstream out(filename);
     for (auto& kv : sessionsM) {
         for (auto sessionSet: kv.second) {
             std::string startDate = TimeUtils::timePointDateToString(sessionSet.startDate);

@@ -96,13 +96,11 @@ EditChildForm::~EditChildForm()
 
 
 void EditChildForm::onGoBackClicked() {
-    std::cout << "Going back" << std::endl;
     navigator->goBack();
 }
 
 
 void EditChildForm::onDeleteClicked() {
-    std::cout << "Going back with deletion" << std::endl;
     childIsDeleted = true;
     navigator->goBack();
 }

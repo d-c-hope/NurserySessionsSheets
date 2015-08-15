@@ -15,6 +15,7 @@ class NewChildForm : public StackWidget
     Q_OBJECT
 
 public:
+    bool isCancelled;
     explicit NewChildForm(QWidget *parent = 0, PageNavigator* _nav = nullptr);
     ~NewChildForm();
 
@@ -23,6 +24,7 @@ public:
 
 public slots:
     void onGoBackClicked();
+    void onCancelClicked();
 
 private:
     Ui::NewChildForm *ui;

@@ -13,6 +13,24 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true">QPushButton {
+color: white;
+background-color: light-blue;
+border-width: 1px;
+border-color: #339;
+border-style: solid;
+border-radius: 7;
+padding: 3px;
+font-size: 10px;
+padding-left: 5px;
+padding-right: 5px;
+min-width: 50px;
+max-width: 90px;
+min-height: 13px;
+max-height: 13px;
+}</string>
+  </property>
   <widget class="QWidget" name="gridLayoutWidget">
    <property name="geometry">
     <rect>
@@ -34,8 +52,8 @@
      <widget class="QPushButton" name="cancelButton">
       <property name="maximumSize">
        <size>
-        <width>100</width>
-        <height>16777215</height>
+        <width>102</width>
+        <height>21</height>
        </size>
       </property>
       <property name="text">
@@ -122,8 +140,8 @@
      <widget class="QPushButton" name="saveButton">
       <property name="maximumSize">
        <size>
-        <width>100</width>
-        <height>16777215</height>
+        <width>102</width>
+        <height>21</height>
        </size>
       </property>
       <property name="text">
@@ -202,8 +220,8 @@
      <widget class="QPushButton" name="newSessionsButton">
       <property name="maximumSize">
        <size>
-        <width>150</width>
-        <height>16777215</height>
+        <width>102</width>
+        <height>21</height>
        </size>
       </property>
       <property name="text">

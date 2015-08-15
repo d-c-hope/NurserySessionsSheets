@@ -24,6 +24,11 @@ namespace Ui {
 class SessionsForm;
 }
 
+class InvalidSessionDates : public std::runtime_error {
+public:
+    InvalidSessionDates(const std::string& msg="") : runtime_error(msg) {}
+};
+
 class SessionsForm : public StackWidget
 {
     Q_OBJECT
@@ -50,19 +55,17 @@ private:
     std::vector<ChildWeeklySessions> listOfWeeklySessions;
     int currentIndex = 0;
 
-//
-//    QCheckBox* isTemporaryCheckBox;
-
     bool isOnCurrent;
 
     sessionsMap sessionsM;
 
-    void updateListOfSessions();
+    void updateListOfSessions() throw(InvalidSessionDates);
+    bool updateWithWarningDialog();
+    bool avoidOverlap(ChildWeeklySessions newSessions,
+                                    std::vector<ChildWeeklySessions> existing);
     void doInitialLoadFromMap(sessionsMap sessions);
     void loadFromCWSessions(std::vector<ChildWeeklySessions> cwSessions, int index);
     ChildWeeklySessions produceNewWeeklySessions();
-//    ChildWeeklySessions getCurrentSessions(std::vector<ChildWeeklySessions> childWeeklySessionsList);
-//    ChildWeeklySessions getNextSessions(std::vector<ChildWeeklySessions> childWeeklySessionsList);
 
 
 public slots:

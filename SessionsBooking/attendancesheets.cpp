@@ -8,6 +8,7 @@
 
 #include <chrono>
 #include <list>
+#include <vector>
 #include <sstream>
 #include <iostream>
 #include <algorithm>
@@ -22,10 +23,16 @@ MonthDetails::MonthDetails(std::tuple<ChildList,ChildList, ChildList> childrenBy
 }
 
 
-
-
 bool sortFunc(Child c1, Child c2) { return (c1.dob < c2.dob); }
 
+
+// sorted children = sort(children, bydob)
+// loop over the months
+//      calculate timepoints for start and end of the month
+//      Loop over the children
+//          loop over the child's sessions
+//              add child to month if there are sessions that overlap this month
+//              pick the room
 std::vector<std::string> AttendanceSheets::createSheets(std::vector<Child> children, MonthRange monthRange) {
     SessionsReader sessionsReader;
     sessionsMap sessionsM = sessionsReader.readSessions();
@@ -37,46 +44,17 @@ std::vector<std::string> AttendanceSheets::createSheets(std::vector<Child> child
         if (monthRange.startYear == monthRange.endYear) endMonth = monthRange.endMonth;
         for (int j = monthRange.startMonth; j <= endMonth; j++) {
             MonthDetails monthDetails = AttendanceSheets::createSheetsForMonth(j, i, children, sessionsM);
-            std::string sheetText = AttendanceSheets::getSheetsTextForRoom(std::get<0>(monthDetails.childrenByRoom), monthDetails.sessionsThisMonth);
+            std::string poohsText = AttendanceSheets::getSheetsTextForRoom(std::get<0>(monthDetails.childrenByRoom), monthDetails.sessionsThisMonth);
+            std::string pigletsText = AttendanceSheets::getSheetsTextForRoom(std::get<1>(monthDetails.childrenByRoom), monthDetails.sessionsThisMonth);
+            std::string tiggersText = AttendanceSheets::getSheetsTextForRoom(std::get<2>(monthDetails.childrenByRoom), monthDetails.sessionsThisMonth);
+            std::string sheetText = "Poohs and Roohs\n" + poohsText + "\n\n" + "Piglets\n" + pigletsText + "\n\n" +
+                    "Tiggers\n" + tiggersText;
             sheets.push_back(sheetText);
-//            std::cout << sheetText;
-//            std::ostringstream filename(AppConstants::defaultMonthFilePrefix, std::ios_base::ate);
-//            filename << TimeUtils::months[j] << "_" << i;
-//            std::cout << filename.str();
         }
     }
     return sheets;
-    // sorted children = sort(children, bydob)
-    // loop over the months
-        // calculate timepoints for start and end of the month
-        // Loop over the children
-            // loop over the child's sessions
-                // add child to month if there are sessions that overlap this month
-                // pick the room
+
 }
-
-
-
-//std::string AttendanceSheets::createSheet(std::vector<Child> children, MonthRange monthRange) {
-//    SessionsReader sessionsReader;
-//    sessionsMap sessionsM = sessionsReader.readSessions("");
-
-//    std::sort(children.begin(), children.end(), sortFunc);
-//    for (int i = monthRange.startYear; i <= monthRange.endYear; i++) {
-//        int endMonth = 12;
-//        if (monthRange.startYear == monthRange.endYear) endMonth = monthRange.endMonth;
-//        for (int j = monthRange.startMonth; j <= endMonth; j++) {
-//            MonthDetails monthDetails = AttendanceSheets::createSheetsForMonth(j, i, children, sessionsM);
-//            std::string sheetText = AttendanceSheets::getSheetsTextForRoom(std::get<0>(monthDetails.childrenByRoom), monthDetails.sessionsThisMonth);
-//            std::cout << sheetText;
-//            std::ostringstream filename(AppConstants::defaultMonthFilePrefix, std::ios_base::ate);
-//            filename << TimeUtils::months[j] << "_" << i;
-//            std::cout << filename.str();
-//        }
-//    }
-
-//}
-
 
 
 MonthDetails AttendanceSheets::createSheetsForMonth(int month, int year, std::vector<Child> children, sessionsMap allChildrensSessions) {
@@ -179,7 +157,7 @@ std::tuple<ChildList,ChildList, ChildList> AttendanceSheets::assignToRooms(std::
 
 int AttendanceSheets::getAgeOnDate(system_clock::time_point dob, system_clock::time_point date) {
     auto dobTuple = TimeUtils::timePointToDate(dob);
-    auto dateTuple = TimeUtils::timePointToDate(dob);
+    auto dateTuple = TimeUtils::timePointToDate(date);
     int years = std::get<0>(dateTuple) - std::get<0>(dobTuple);
     int months = std::get<1>(dateTuple) - std::get<1>(dobTuple);
     int days = std::get<2>(dateTuple) - std::get<2>(dobTuple);
@@ -234,30 +212,40 @@ std::string AttendanceSheets::getSheetsTextForRoom(std::vector<Child> children, 
     bool anyLeft = false;
     for (auto halfDayList: allDays) if (halfDayList.size() > 0) anyLeft = true;
 
-    ss << "MonAM, MonPM, TueAM, TuePM, WedAM, WedPM, ThuAM, ThuPM, FriAM, FriPM";
+    int paddedLength = 20;
+    std::string empty = "";
+    empty.insert(empty.begin(), paddedLength, ' ');
+
+
+    std::vector<std::string> days{"MonAM", "MonPM","TueAM", "TuePM", "WedAM", "WedPM", "ThuAM", "ThuPM", "FriAM", "FriPM"};
+    for (auto& d: days) {
+        if (d.size() < paddedLength) d.insert(d.end(), paddedLength-d.size(), ' ');
+    }
+    std::string daysJoined = AppUtils::join<std::string>(days, ", ");
+    ss << daysJoined << std::endl;
 
     while(anyLeft) {
-
 
         std::vector<std::string> entries;
 
         anyLeft = false;
-        for (auto halfDayList: allDays) {
+        for (auto& halfDayList: allDays) {
             if (halfDayList.size() > 0) {
                 auto child = halfDayList.front();
-                entries.push_back(child.firstName + " " + child.lastName);
+                std::string name = child.firstName + " " + child.lastName;
+                if (name.size() < paddedLength) name.insert(name.end(), paddedLength-name.size(), ' ');
+
+                entries.push_back(name);
                 halfDayList.pop_front();
             }
             else {
-                entries.push_back(" ");
+                entries.push_back(empty);
             }
-            if (halfDayList != friPmChildren) ss << ", ";
-
 
             if (halfDayList.size() > 0) anyLeft = true;
         }
         std::string joined = AppUtils::join<std::string>(entries, ", ");
-        ss << joined << "\n";
+        ss << joined << std::endl;
     }
     return ss.str();
 

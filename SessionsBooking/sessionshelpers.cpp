@@ -26,24 +26,4 @@ std::vector<ChildWeeklySessions> SessionsHelpers::filterOldSessionsPerChild(std:
 }
 
 
-//ChildWeeklySessions SessionsForm::getCurrentSessions(std::vector<ChildWeeklySessions> childWeeklySessionsList) {
-//    ChildWeeklySessions current; //= childWeeklySessionsList[0];
-//    std::chrono::system_clock::time_point now = std::chrono::system_clock::now();
-//    for (auto weeklySessions: childWeeklySessionsList) {
-//        if (weeklySessions.startDate < now) current = weeklySessions;
-//    }
-//    return current;
-//}
 
-
-//ChildWeeklySessions SessionsForm::getNextSessions(std::vector<ChildWeeklySessions> childWeeklySessionsList) {
-//    ChildWeeklySessions next;// = childWeeklySessionsList[0];
-//    std::chrono::system_clock::time_point now = std::chrono::system_clock::now();
-//    for (auto weeklySessions: childWeeklySessionsList) {
-//        if (weeklySessions.startDate > now) {
-//            next = weeklySessions;
-//            break;
-//        }
-//    }
-//    return next;
-//}

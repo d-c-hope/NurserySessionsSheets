@@ -16,6 +16,23 @@
   <property name="styleSheet">
    <string notr="true">QMainWindow {
 	background-color:white;
+}
+
+QPushButton {
+color: white;
+background-color: light-blue;
+border-width: 1px;
+border-color: #339;
+border-style: solid;
+border-radius: 7;
+padding: 3px;
+font-size: 10px;
+padding-left: 5px;
+padding-right: 5px;
+min-width: 50px;
+max-width: 90px;
+min-height: 13px;
+max-height: 13px;
 }</string>
   </property>
   <widget class="QWidget" name="centralWidget">

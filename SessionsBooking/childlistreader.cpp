@@ -45,7 +45,6 @@ std::vector<Child> ChildListReader::readList()
       auto tp = std::chrono::system_clock::from_time_t(std::mktime(&tm));
 
       std::time_t t = std::chrono::system_clock::to_time_t(tp);
-      std::cout << std::put_time(std::localtime(&t), "%d/%m/%Y") << '\n';
       std::chrono::system_clock::time_point age = tp;
 
       int id = atoi(strs[0].c_str());

@@ -83,7 +83,7 @@ Child NewChildForm::getChild() {
         std::transform(children.begin(), children.end(), childrenIds.begin(),
            [](Child child) -> double { return child.id; });
         auto it = max_element(std::begin(childrenIds), std::end(childrenIds));
-        int max = *it;
+        max = *it;
     }
 
     Child c(max+1, firstName, lastName, ageTp);

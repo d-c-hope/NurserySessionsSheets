@@ -169,7 +169,7 @@ int AttendanceSheets::getAgeOnDate(system_clock::time_point dob, system_clock::t
     // march 2013, march 2014
     if (months < 0) years -= 1;
     else if (months == 0) {
-        if (days > 0) years -= 1;
+        if (days < 0) years -= 1;
     }
 
     return years;

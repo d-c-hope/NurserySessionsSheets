@@ -15,6 +15,7 @@ using namespace std;
     const string defaultSessionsFile = appFilesDir + "/sessionslist.txt";
     const string defaultMonthFilePrefix = homeDir + "/Desktop/sessions_for_";
 
+    const bool sepFiles = false;
 //    const string defaultChildListFile = QStandardPaths::HomeLocation.toStdString(); ///Users/david_hope2/Desktop/tmp/childlist.txt";
 //    const string defaultSessionsFile = "/Users/david_hope2/Desktop/tmp/sessionslist.txt";
 //    const string defaultMonthFilePrefix = "/Users/david_hope2/Desktop/tmp/sessions_for_";

@@ -110,7 +110,7 @@ Child EditChildForm::getChild() {
 
     std::string firstName = ui->firstNameEdit->text().toStdString();
     std::string lastName = ui->lastNameEdit->text().toStdString();
-    int day = ui->dayCombo->currentIndex();
+    int day = ui->dayCombo->currentIndex()+1;
     int month = ui->monthCombo->currentIndex();
     int yearIdx = ui->yearCombo->currentIndex();
     std::vector<int> years = TimeUtils::getYears(6, 0);

@@ -6,7 +6,8 @@
 #include <boost/algorithm/string.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/algorithm/string.hpp>
-
+#include <boost/filesystem.hpp>
+#include <boost/algorithm/string/replace.hpp>
 
 #include "childlistform.h"
 #include "ui_childlistform.h"
@@ -125,16 +126,33 @@ void ChildListForm::onPrintSessionsClick() {
 
     std::vector<std::string> sheets = AttendanceSheets::createSheets(children, MonthRange(month, month, year, year));
     std::string sheetText = sheets[0];
+    std::string ext = ".txt";
 
     std::ostringstream filepath(AppConstants::defaultMonthFilePrefix, std::ios_base::ate);
-    filepath << TimeUtils::months[month-1] << "_" << year << ".csv";
+    filepath << TimeUtils::months[month-1] << "_" << year << ext;
 
     QString selFilename  = QFileDialog::getSaveFileName(this, tr("Save File"),
                                QString::fromStdString(filepath.str()));
 
+    if (AppConstants::sepFiles == true) {
+        std::string selFilenameS = selFilename.toStdString();
 
-    std::ofstream out(selFilename.toStdString());
-    out << sheetText;
+        std::string filenamePoohs = boost::replace_first_copy(selFilenameS, ext, "_poohs" + ext);
+        std::string filenamePiglets = boost::replace_first_copy(selFilenameS, ext, "_piglets" + ext);
+        std::string filenameTiggers = boost::replace_first_copy(selFilenameS, ext, "_tiggers" + ext);
+
+        std::ofstream outP(filenamePoohs);
+        outP << sheetText;
+        std::ofstream outPi(filenamePiglets);
+        outPi << sheetText;
+        std::ofstream outT(filenameTiggers);
+        outT << sheetText;
+
+    }
+    else {
+        std::ofstream out(selFilename.toStdString());
+        out << sheetText;
+    }
 
 }
 

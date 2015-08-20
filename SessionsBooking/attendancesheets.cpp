@@ -133,7 +133,6 @@ ChildWeeklySessions AttendanceSheets::pickSessionSet(Child child, system_clock::
 //5. All children over 3 or becoming 3 in the first half of the month should be in Tiggers and Christopher Robins
 
 std::tuple<ChildList,ChildList, ChildList> AttendanceSheets::assignToRooms(std::vector<Child> childrenInNursery, int month, int year) {
-//    std::tuple<ChildList,ChildList, ChildList, ChildList> listsByRoom;
     ChildList poosRoos;
     ChildList piglets;
     ChildList tiggers;
@@ -214,6 +213,7 @@ std::string AttendanceSheets::getSheetsTextForRoom(std::vector<Child> children, 
 
     int paddedLength = 20;
     std::string empty = "";
+    std::string delimiter = ", ";
     empty.insert(empty.begin(), paddedLength, ' ');
 
 
@@ -221,7 +221,7 @@ std::string AttendanceSheets::getSheetsTextForRoom(std::vector<Child> children, 
     for (auto& d: days) {
         if (d.size() < paddedLength) d.insert(d.end(), paddedLength-d.size(), ' ');
     }
-    std::string daysJoined = AppUtils::join<std::string>(days, ", ");
+    std::string daysJoined = AppUtils::join<std::string>(days, delimiter);
     ss << daysJoined << std::endl;
 
     while(anyLeft) {
@@ -244,7 +244,7 @@ std::string AttendanceSheets::getSheetsTextForRoom(std::vector<Child> children, 
 
             if (halfDayList.size() > 0) anyLeft = true;
         }
-        std::string joined = AppUtils::join<std::string>(entries, ", ");
+        std::string joined = AppUtils::join<std::string>(entries, delimiter);
         ss << joined << std::endl;
     }
     return ss.str();

@@ -68,7 +68,8 @@ CONFIG += c++11
 #INCLUDEPATH += C:/boost/boost_1_53_0/
 #LIBS += "-LC:/boost/boost_1_53_0/stage/lib/"
 
-DISTFILES +=
+DISTFILES += \
+    sessionsbooking.icns
 
 RESOURCES += \
     images.qrc
@@ -81,3 +82,12 @@ macx: LIBS += /usr/local/boostBuild/lib/libboost_filesystem.a
 
 #macx: PRE_TARGETDEPS += $$PWD/../../../../../../usr/local/boostBuild/lib/libboost_system.a
 #macx: PRE_TARGETDEPS += $$PWD/../../../../../../usr/local/boostBuild/lib/libboost_filesystem.a
+
+
+ICON = sessionsbooking.icns
+
+
+
+
+
+

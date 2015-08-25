@@ -14,11 +14,13 @@ using namespace std;
     const string defaultChildListFile = appFilesDir + "/childlist.txt";
     const string defaultSessionsFile = appFilesDir + "/sessionslist.txt";
     const string defaultMonthFilePrefix = homeDir + "/Desktop/sessions_for_";
+    const string defaultChildExport = homeDir + "/Desktop/childListExport.txt";
 
-    const bool sepFiles = false;
-//    const string defaultChildListFile = QStandardPaths::HomeLocation.toStdString(); ///Users/david_hope2/Desktop/tmp/childlist.txt";
-//    const string defaultSessionsFile = "/Users/david_hope2/Desktop/tmp/sessionslist.txt";
-//    const string defaultMonthFilePrefix = "/Users/david_hope2/Desktop/tmp/sessions_for_";
+    const bool sepFiles = true;
+
+    // Note that we use a comma for delimiting with separate sheets, and a tab if not. This is simply to support apple iwork - you can drag a comma
+    // separated file over a spreadsheet or you can copy and paste in a tab separated file, but not the other way round
+    const string delimiter = ", ";
 
 }
 

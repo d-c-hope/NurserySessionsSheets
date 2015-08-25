@@ -100,17 +100,6 @@ namespace TimeUtils {
     }
 
 
-//    time_point nextMondayAfterTime(time_point) {
-//        std::time_t dateT = std::chrono::system_clock::to_time_t(date);
-//        std::tm tm = std::localtime(&dateT);
-//        int dayOfWeek = tm.tm_wday;
-//        int change;
-//        if (dayOfWeek <= 1) change = 1 - dayOfWeek;
-//        else mon = dayOfWeek + (6 - dayOfWeek)
-
-//    }
-
-
     // reqDay is 0-6 where 0 is sunday
     system_clock::time_point nextDayAfterTime(system_clock::time_point date, int reqDay) {
         std::time_t dateT = std::chrono::system_clock::to_time_t(date);
@@ -122,26 +111,6 @@ namespace TimeUtils {
         return system_clock::now() + std::chrono::hours(24*change);
     }
 
-
-//    // Month is 1-12
-//    system_clock::time_point getStartOfMonth(int month, int year) {
-////        std::time_t dateT = std::chrono::system_clock::to_time_t(date);
-////        std::tm tm = *std::localtime(&dateT);
-////        int dayOfWeek = tm.tm_wday;
-////        int change;
-////        if (dayOfWeek <= reqDay) change = reqDay - dayOfWeek;
-////        else change = (dayOfWeek - reqDay) + 7;
-////        return system_clock::now() + std::chrono::hours(24*change);
-
-
-////        struct std::tm tm;
-////        memset(&tm, 0, sizeof(struct tm));
-////        tm.tm_year = year - 1900;
-////        tm.tm_mon = month-1;
-////        tm.tm_mday = 1;
-
-//        system_clock::time_point startOfMonth = dateToTimePoint(1, month, year);
-//    }
 
 
     int daysInMonth(int month, int year) {
@@ -159,6 +128,9 @@ namespace TimeUtils {
         return numberOfDays;
 
     }
+
+
+
 
 
 }

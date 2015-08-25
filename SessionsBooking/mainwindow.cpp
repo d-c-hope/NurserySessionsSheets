@@ -4,7 +4,12 @@
 #include "newchildform.h"
 #include "editchildform.h"
 #include "sessionsform.h"
+#include "childlistexporter.h"
+#include "childlistreader.h"
+#include "appConstants.h"
+
 #include <iostream>
+#include <qfiledialog.h>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -79,6 +84,27 @@ void MainWindow::goBack() {
 
     }
 }
+
+
+void MainWindow::on_actionChild_List_triggered()
+{
+    std::cout << "clicked enu item" << std::endl;
+
+    QString selFilename  = QFileDialog::getSaveFileName(this, tr("Save File"),
+                               QString::fromStdString(AppConstants::defaultChildExport));
+    if (selFilename.size() == 0) return;
+
+    ChildListReader clReader;
+    std::vector<Child> children = clReader.readList();
+    ChildListExporter exporter(children);
+    exporter.exportList(selFilename.toStdString());
+
+}
+
+
+
+
+
 
 
 

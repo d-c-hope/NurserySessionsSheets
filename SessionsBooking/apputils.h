@@ -15,7 +15,7 @@ template<class T>
             joinedValues << value << separator;
         }
         //Strip off the trailing comma
-        std::string result = joinedValues.str().substr(0,joinedValues.str().size()-1);
+        std::string result = joinedValues.str().substr(0,joinedValues.str().size()-separator.size());
         return result;
 
     }

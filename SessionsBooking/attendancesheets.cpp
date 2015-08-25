@@ -33,7 +33,7 @@ bool sortFunc(Child c1, Child c2) { return (c1.dob < c2.dob); }
 //          loop over the child's sessions
 //              add child to month if there are sessions that overlap this month
 //              pick the room
-std::vector<std::string> AttendanceSheets::createSheets(std::vector<Child> children, MonthRange monthRange) {
+std::vector<std::string> AttendanceSheets::createSheets(std::vector<Child> children, MonthRange monthRange, bool isSepSheets) {
     SessionsReader sessionsReader;
     sessionsMap sessionsM = sessionsReader.readSessions();
     std::vector<std::string> sheets;
@@ -44,12 +44,19 @@ std::vector<std::string> AttendanceSheets::createSheets(std::vector<Child> child
         if (monthRange.startYear == monthRange.endYear) endMonth = monthRange.endMonth;
         for (int j = monthRange.startMonth; j <= endMonth; j++) {
             MonthDetails monthDetails = AttendanceSheets::createSheetsForMonth(j, i, children, sessionsM);
-            std::string poohsText = AttendanceSheets::getSheetsTextForRoom(std::get<0>(monthDetails.childrenByRoom), monthDetails.sessionsThisMonth);
-            std::string pigletsText = AttendanceSheets::getSheetsTextForRoom(std::get<1>(monthDetails.childrenByRoom), monthDetails.sessionsThisMonth);
-            std::string tiggersText = AttendanceSheets::getSheetsTextForRoom(std::get<2>(monthDetails.childrenByRoom), monthDetails.sessionsThisMonth);
-            std::string sheetText = "Poohs and Roohs\n" + poohsText + "\n\n" + "Piglets\n" + pigletsText + "\n\n" +
+            std::string poohsText = AttendanceSheets::getSheetsTextForRoom(std::get<0>(monthDetails.childrenByRoom), monthDetails.sessionsThisMonth, !isSepSheets);
+            std::string pigletsText = AttendanceSheets::getSheetsTextForRoom(std::get<1>(monthDetails.childrenByRoom), monthDetails.sessionsThisMonth, !isSepSheets);
+            std::string tiggersText = AttendanceSheets::getSheetsTextForRoom(std::get<2>(monthDetails.childrenByRoom), monthDetails.sessionsThisMonth, !isSepSheets);
+            if (isSepSheets) {
+                sheets.push_back(poohsText);
+                sheets.push_back(pigletsText);
+                sheets.push_back(tiggersText);
+            }
+            else {
+                std::string sheetText = "Poohs and Roohs\n" + poohsText + "\n\n" + "Piglets\n" + pigletsText + "\n\n" +
                     "Tiggers\n" + tiggersText;
-            sheets.push_back(sheetText);
+                sheets.push_back(sheetText);
+            }
         }
     }
     return sheets;
@@ -191,7 +198,8 @@ std::list<Child> AttendanceSheets::getChildrenInOnDay(std::vector<Child> childre
 }
 
 
-std::string AttendanceSheets::getSheetsTextForRoom(std::vector<Child> children, std::map<int, ChildWeeklySessions> sessionsForMonth) {
+std::string AttendanceSheets::getSheetsTextForRoom(std::vector<Child> children, std::map<int, ChildWeeklySessions> sessionsForMonth,
+                                                   bool isDaysHeader) {
 
     std::list<Child> monAmChildren = AttendanceSheets::getChildrenInOnDay(children, sessionsForMonth, "monAM");
     std::list<Child> monPmChildren = AttendanceSheets::getChildrenInOnDay(children, sessionsForMonth, "monPM");
@@ -213,7 +221,7 @@ std::string AttendanceSheets::getSheetsTextForRoom(std::vector<Child> children, 
 
     int paddedLength = 20;
     std::string empty = "";
-    std::string delimiter = ", ";
+    std::string delimiter = AppConstants::delimiter;
     empty.insert(empty.begin(), paddedLength, ' ');
 
 
@@ -222,7 +230,7 @@ std::string AttendanceSheets::getSheetsTextForRoom(std::vector<Child> children, 
         if (d.size() < paddedLength) d.insert(d.end(), paddedLength-d.size(), ' ');
     }
     std::string daysJoined = AppUtils::join<std::string>(days, delimiter);
-    ss << daysJoined << std::endl;
+    if (isDaysHeader) ss << daysJoined << std::endl;
 
     while(anyLeft) {
 

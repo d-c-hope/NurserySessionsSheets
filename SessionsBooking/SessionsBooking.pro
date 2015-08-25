@@ -32,7 +32,8 @@ SOURCES += main.cpp\
     childWeeklySessions.cpp \
     monthrange.cpp \
     appConstants.cpp \
-    apputils.cpp
+    apputils.cpp \
+    childlistexporter.cpp
 
 HEADERS  += mainwindow.h \
     childlistform.h \
@@ -51,7 +52,8 @@ HEADERS  += mainwindow.h \
     attendancesheets.h \
     monthrange.h \
     appConstants.h \
-    apputils.h
+    apputils.h \
+    childlistexporter.h
 
 FORMS    += mainwindow.ui \
     childlistform.ui \
@@ -59,7 +61,7 @@ FORMS    += mainwindow.ui \
     editchildform.ui \
     sessionsform.ui
 
-INCLUDEPATH += /Users/david_hope2/Desktop/boost_1_58_0
+INCLUDEPATH += /usr/local/boost_1_58_0
 
 #QMAKE_CXXFLAGS += -std=c++11
 QMAKE_CXXFLAGS_CXX11 = -std=c++14 -stdlib=libc++

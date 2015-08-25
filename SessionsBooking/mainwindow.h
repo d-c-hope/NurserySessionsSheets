@@ -25,6 +25,10 @@ private:
     std::list<QWidget*> windows;
     void goToPage(std::string name);
     void goBack();
+
+
+private slots:
+    void on_actionChild_List_triggered();
 };
 
 #endif // MAINWINDOW_H

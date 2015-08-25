@@ -124,15 +124,18 @@ void ChildListForm::onPrintSessionsClick() {
 
     auto children = model->getListOfChildren();
 
-    std::vector<std::string> sheets = AttendanceSheets::createSheets(children, MonthRange(month, month, year, year));
-    std::string sheetText = sheets[0];
+    std::vector<std::string> sheets = AttendanceSheets::createSheets(children,
+                                                                     MonthRange(month, month, year, year),
+                                                                     AppConstants::sepFiles);
     std::string ext = ".txt";
+    if (AppConstants::sepFiles) ext = ".csv";
 
     std::ostringstream filepath(AppConstants::defaultMonthFilePrefix, std::ios_base::ate);
     filepath << TimeUtils::months[month-1] << "_" << year << ext;
 
     QString selFilename  = QFileDialog::getSaveFileName(this, tr("Save File"),
                                QString::fromStdString(filepath.str()));
+    if (selFilename.size() == 0) return;
 
     if (AppConstants::sepFiles == true) {
         std::string selFilenameS = selFilename.toStdString();
@@ -142,14 +145,15 @@ void ChildListForm::onPrintSessionsClick() {
         std::string filenameTiggers = boost::replace_first_copy(selFilenameS, ext, "_tiggers" + ext);
 
         std::ofstream outP(filenamePoohs);
-        outP << sheetText;
+        outP << sheets[0];
         std::ofstream outPi(filenamePiglets);
-        outPi << sheetText;
+        outPi << sheets[1];
         std::ofstream outT(filenameTiggers);
-        outT << sheetText;
+        outT << sheets[2];
 
     }
     else {
+        std::string sheetText = sheets[0];
         std::ofstream out(selFilename.toStdString());
         out << sheetText;
     }

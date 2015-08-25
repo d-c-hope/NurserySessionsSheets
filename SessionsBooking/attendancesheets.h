@@ -21,13 +21,13 @@ public:
     MonthDetails(std::tuple<ChildList,ChildList, ChildList> childrenByRoom, std::map<int, ChildWeeklySessions> sessionsThisMonth);
 };
 
-
+bool sortFunc(Child c1, Child c2);
 
 namespace AttendanceSheets {
 
     using namespace std::chrono;
 
-    std::vector<std::string> createSheets(std::vector<Child> children, MonthRange monthRange);
+    std::vector<std::string> createSheets(std::vector<Child> children, MonthRange monthRange, bool isSepSheets);
 
     MonthDetails createSheetsForMonth(int month, int year, std::vector<Child> children, sessionsMap allChildrensSessions);
 
@@ -45,7 +45,8 @@ namespace AttendanceSheets {
                                           std::map<int, ChildWeeklySessions> sessionsForMonth,
                                           std::string day);
 
-    std::string getSheetsTextForRoom(std::vector<Child> children, std::map<int, ChildWeeklySessions> sessionsForMonth);
+    std::string getSheetsTextForRoom(std::vector<Child> children, std::map<int, ChildWeeklySessions> sessionsForMonth,
+                                     bool isDaysHeader);
 }
 
 

@@ -12,44 +12,7 @@ ChildListExporter::ChildListExporter(vector<Child> children) {
 }
 
 
-
-//bool sortFunc(Child c1, Child c2) { return (c1.dob < c2.dob); }
-
-
-//void ChildListExporter::exportList(string filename) {
-
-
-//    vector<Child> monthDisplacedChildren;
-//    for (auto child: children) {
-//        child.dob = add4Months(child.dob);
-//        monthDisplacedChildren.push_back(child);
-//    }
-//    sort(monthDisplacedChildren.begin(), monthDisplacedChildren.end(), sortFunc);
-//    vector<string> lines;
-
-//    int paddedLength = 25;
-//    for (auto current: monthDisplacedChildren) {
-//        string name = current.firstName + " " + current.lastName;
-//        if (name.size() < paddedLength) name.insert(name.end(), paddedLength-name.size(), ' ');
-//        string dobStr = TimeUtils::timePointDateToString(current.dob);
-//        lines.push_back(name + " " + dobStr);
-//    }
-
-////    for (auto line: lines) {
-////        for (string item: line) {
-////            if (item.size() < paddedLength) item.insert(item.end(), paddedLength-name.size(), ' ');
-////        }
-////    }
-
-//    string joined = AppUtils::join<string>(lines, "\n");
-//    cout << joined;
-
-
-//}
-
-
-
-void ChildListExporter::exportList(string filename) {
+string ChildListExporter::exportList(string filename) {
 
     stringstream sheet;
     int paddedLength = 25;
@@ -59,13 +22,13 @@ void ChildListExporter::exportList(string filename) {
 
     Child youngest = sortedChildren[0];
     auto youngestDate = TimeUtils::timePointToDate(youngest.dob);
-    int year = get<2>(youngestDate);
+    int year = get<0>(youngestDate);
     int month = get<1>(youngestDate);
     if (month < 9) year -= 1;
     int prevMonth = month;
     int prevYear = year;
 
-    sheet << year << "\n";
+    sheet << "Sept " << year << "\n";
     for (Child child: sortedChildren) {
 
         auto dob = TimeUtils::timePointToDate(child.dob);
@@ -73,7 +36,10 @@ void ChildListExporter::exportList(string filename) {
         month = get<1>(dob);
         if ( ((prevMonth < 9) && (month >= 9)) ||
              ((prevMonth < 9) && (year  > prevYear)) ) {
-            sheet << "\n\n" << year << endl;
+
+            // must be careful if we jump to next year but are in the year starting previous september
+            if (month < 9) sheet << "\n\nSept " << year -1 << endl;
+            else sheet << "\n\nSept " << year << endl;
         }
 
         else if ( year  > prevYear) {
@@ -96,32 +62,9 @@ void ChildListExporter::exportList(string filename) {
     }
 
     string childListStr = sheet.str();
-    cout << childListStr;
 
-
-//    vector<string> lines;
-
-//    int paddedLength = 25;
-//    for (auto current: monthDisplacedChildren) {
-//        string name = current.firstName + " " + current.lastName;
-//        if (name.size() < paddedLength) name.insert(name.end(), paddedLength-name.size(), ' ');
-//        string dobStr = TimeUtils::timePointDateToString(current.dob);
-//        lines.push_back(name + " " + dobStr);
-//    }
-
-////    for (auto line: lines) {
-////        for (string item: line) {
-////            if (item.size() < paddedLength) item.insert(item.end(), paddedLength-name.size(), ' ');
-////        }
-////    }
-
-//    string joined = AppUtils::join<string>(lines, "\n");
-//    cout << joined;
-
-
+    return childListStr;
 }
-
-
 
 
 system_clock::time_point ChildListExporter::add4Months(system_clock::time_point date) {
@@ -136,16 +79,7 @@ system_clock::time_point ChildListExporter::add4Months(system_clock::time_point 
 }
 
 
-//        Child current = children[0];
-//        std::tuple<int, int, int> dobTuple = timePointToDate(current.dob);
-
-//        int month = std::get<1>(dobTuple);
-//        if (month < 10) month = month + 4;
-//        std::rotate(v.begin(), v.begin() + 1, v.end());
-
-//    for (int month = 1; month < 13; month++) {
-
-//    }
 
 
-//    std::sort(children.begin(), children.end(), sortFunc);
+
+

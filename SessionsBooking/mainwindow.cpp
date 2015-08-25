@@ -97,7 +97,10 @@ void MainWindow::on_actionChild_List_triggered()
     ChildListReader clReader;
     std::vector<Child> children = clReader.readList();
     ChildListExporter exporter(children);
-    exporter.exportList(selFilename.toStdString());
+    std::string childListSheet = exporter.exportList(selFilename.toStdString());
+
+    std::ofstream out(selFilename.toStdString());
+    out << childListSheet;
 
 }
 

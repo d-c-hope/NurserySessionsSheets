@@ -11,7 +11,7 @@ class ChildListExporter
 {
 public:
     ChildListExporter(std::vector<Child> children);
-    void exportList(std::string filename);
+    std::string exportList(std::string filename);
 
 
 private:

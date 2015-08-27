@@ -66,6 +66,7 @@ private:
     void doInitialLoadFromMap(sessionsMap sessions);
     void loadFromCWSessions(std::vector<ChildWeeklySessions> cwSessions, int index);
     ChildWeeklySessions produceNewWeeklySessions();
+    void updatePageLabel();
 
 
 public slots:

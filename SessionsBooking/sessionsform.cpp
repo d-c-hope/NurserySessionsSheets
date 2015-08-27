@@ -1,4 +1,6 @@
 #include <QMessageBox>
+#include <QString>
+#include <sstream>
 
 #include "sessionsform.h"
 #include "ui_sessionsform.h"
@@ -61,6 +63,15 @@ SessionsForm::SessionsForm(Child child, QWidget *parent, PageNavigator* _navigat
     doInitialLoadFromMap(sessionsM);
 
     isOnCurrent = true;
+
+    updatePageLabel();
+}
+
+
+void SessionsForm::updatePageLabel() {
+    std::stringstream text("Page ");
+    text << currentIndex+1 << " of " << listOfWeeklySessions.size();
+    ui->pageLabel->setText(QString::fromStdString(text.str()));
 }
 
 
@@ -85,7 +96,7 @@ void SessionsForm::onNewSessionsClicked() {
     }
     currentIndex += 1;
     loadFromCWSessions(listOfWeeklySessions, currentIndex);
-
+    updatePageLabel();
 }
 
 
@@ -96,6 +107,7 @@ void SessionsForm::onPrevSessionsClicked() {
 
         currentIndex -= 1;
         loadFromCWSessions(listOfWeeklySessions, currentIndex);
+        updatePageLabel();
     }
 
 }
@@ -259,20 +271,23 @@ bool SessionsForm::avoidOverlap(ChildWeeklySessions newSessions,
     bool overlap = false;
 
     for (int i = 0; i < existing.size(); i++) {
+        bool localOverlap = false;
         auto existingS = existing[i];
 
 
         // if it starts before
         if ( (newSessions.startDate < existingS.startDate) &&
              (newSessions.endDate > existingS.startDate) ) {
-            overlap = true;
+            localOverlap = true;
         }
         // if it starts during
         if ( (newSessions.startDate >= existingS.startDate) &&
-             (newSessions.startDate < existingS.endDate) ) {
-            overlap = true;
+             (newSessions.startDate <= existingS.endDate) ) {
+            localOverlap = true;
         }
-        if (i == currentIndex) overlap = false;
+        if (i == currentIndex) localOverlap = false;
+
+        if (localOverlap) overlap = true;
     }
     return overlap;
 }

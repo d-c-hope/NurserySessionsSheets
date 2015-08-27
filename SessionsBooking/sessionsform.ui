@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>640</width>
-    <height>480</height>
+    <height>607</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -244,6 +244,19 @@ max-height: 13px;
      </widget>
     </item>
    </layout>
+  </widget>
+  <widget class="QLabel" name="pageLabel">
+   <property name="geometry">
+    <rect>
+     <x>30</x>
+     <y>540</y>
+     <width>59</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>TextLabel</string>
+   </property>
   </widget>
  </widget>
  <resources/>
